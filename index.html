@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SigmaGrif — данные сервера (Paper 1.16.5)</title>
+  <style>
+    :root {
+      --bg: #0f1115; --panel: #171a21; --panel2: #1d2230; --text: #e8ecf3; --muted: #a7b0c0;
+      --accent: #7c5cff; --accent2: #22c55e; --warn: #f59e0b; --danger: #ef4444; --border: #2a3142;
+      --code: #0b0d12;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: Inter, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+    a { color: #b9a7ff; }
+    .layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+    nav { position: sticky; top: 0; height: 100vh; overflow: auto; background: linear-gradient(180deg,#121520,#0f1115); border-right: 1px solid var(--border); padding: 20px 14px; }
+    nav h1 { font-size: 18px; margin: 0 0 6px; }
+    nav p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    nav .group { margin-top: 14px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+    nav a { display: block; padding: 7px 10px; border-radius: 8px; color: var(--text); text-decoration: none; font-size: 14px; }
+    nav a:hover { background: var(--panel2); }
+    main { padding: 28px 28px 60px; max-width: 1280px; }
+    section { margin-bottom: 28px; }
+    h2 { font-size: 24px; margin: 0 0 12px; padding-top: 8px; }
+    h3 { font-size: 18px; margin: 18px 0 8px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; margin: 10px 0; }
+    .grid { display: grid; gap: 12px; }
+    .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .kpi { background: var(--panel2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+    .kpi .label { color: var(--muted); font-size: 12px; }
+    .kpi .value { font-size: 16px; font-weight: 600; margin-top: 2px; word-break: break-word; }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 8px 8px; vertical-align: top; text-align: left; }
+    th { color: var(--muted); font-weight: 600; background: rgba(255,255,255,0.02); position: sticky; top: 0; }
+    .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: 12px; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    pre { background: var(--code); border: 1px solid var(--border); border-radius: 10px; padding: 12px; overflow: auto; font-size: 12.5px; color: #d8dee9; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); background: var(--panel2); margin: 2px 4px 2px 0; }
+    .ok { color: #86efac; } .warn { color: #fcd34d; } .bad { color: #fca5a5; }
+    .muted { color: var(--muted); }
+    ul { margin: 6px 0 6px 20px; padding: 0; }
+    li { margin: 4px 0; }
+    .note { border-left: 3px solid var(--warn); padding: 8px 12px; background: rgba(245,158,11,.08); border-radius: 6px; }
+    .small { font-size: 12.5px; }
+    details { border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; background: var(--panel2); margin: 8px 0; }
+    summary { cursor: pointer; font-weight: 600; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } nav { position: relative; height: auto; } }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav>
+    <h1>SigmaGrif</h1>
+    <p>Мини-сайт данных сервера<br>Paper 1.16.5 (MCSH)</p>
+    <div class="group">Общее</div>
+    <a href="#overview">Обзор сервера</a>
+    <a href="#worlds">Миры и спавн/лобби</a>
+    <a href="#plugins">Плагины и системы</a>
+    <a href="#economy">Экономика и торговля</a>
+    <div class="group">Привилегии</div>
+    <a href="#ranks">12 рангов (сводка)</a>
+    <a href="#perks">Права и перки</a>
+    <a href="#kits">Киты (Essentials)</a>
+    <a href="#limits">Лимиты, кулдауны, бусты</a>
+    <div class="group">Защита и механики</div>
+    <a href="#claims">Приваты и /fly</a>
+    <a href="#rtp">RTP и перемещение</a>
+    <a href="#npc">NPC, кейсы, меню, шахта, TNT</a>
+    <a href="#caveats">Ограничения и caveats</a>
+    <a href="#files">Файлы и артефакты</a>
+  </nav>
+  <main>
+    <section id="overview">
+      <h2>Обзор сервера</h2>
+      <div class="grid cols-3">
+        <div class="kpi"><div class="label">Платформа</div><div class="value">Paper 1.16.5, Java 16</div></div>
+        <div class="kpi"><div class="label">Хостинг</div><div class="value">MCSH (mcserverhost.com)</div></div>
+        <div class="kpi"><div class="label">Server ID</div><div class="value">430986da-53ef-42c1-91ff-07658f7272e5</div></div>
+        <div class="kpi"><div class="label">API (используемые)</div><div class="value">/wake, /command, /files/*, /resources</div></div>
+        <div class="kpi"><div class="label">Сборка плагинов</div><div class="value">JDK 17, <code>--release 8</code>, spigot-api 1.16.5</div></div>
+        <div class="kpi"><div class="label">Состояние</div><div class="value">Может auto-sleep/offline → <code>/wake</code></div></div>
+      </div>
+      <div class="card">
+        <h3>Деплой (live)</h3>
+        <ul>
+          <li>Типовой поток: <b>stop → upload → wake</b> (или wake/upload/reload, если безопасно). Для некоторых сохранений (напр. <code>Citizens/saves.yml</code>) предпочтителен stop/upload/wake.</li>
+          <li>MCSH API: <code>/files/contents</code> принимает параметр <code>path</code>; <code>/files/upload</code> — multipart в <code>directory</code>.</li>
+          <li>Токен доступа хранится локально (напр. <code>C:\Users\KOMPUKTER\Downloads\SigmaGrif_transfer\mcsh_token.txt</code>, получен из браузерного <code>_mcsh_at</code>). В этот сайт токен намеренно не включён.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="worlds">
+      <h2>Миры и спавн/лобби</h2>
+      <div class="card">
+        <div class="table-wrap"><table>
+          <tr><th>Мир</th><th>Назначение</th><th>Особенности</th></tr>
+          <tr><td><code>lobby</code></td><td>Лобби/спавн (отдельный void-мир)</td><td>Полностью пустой (без ландшафта), вечный день (6000, doDaylightCycle off), без погоды/мобов/PvP, fire-tick off, keep-spawn-loaded, difficulty NORMAL. Создаётся плагином <b>SigmaGrifSpawn</b>.</td></tr>
+          <tr><td><code>world</code></td><td>Основной («простой») мир</td><td>Город, кейсы (исторически), анархия/выживание; сюда ведёт RTP.</td></tr>
+          <tr><td><code>world_nether</code>, <code>world_the_end</code></td><td>Измерения основного мира</td><td>Стандартные измерения.</td></tr>
+        </table></div>
+      </div>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Точки и поведение (SigmaGrifSpawn v1.3)</h3>
+          <ul>
+            <li><b>Спавн лобби:</b> <code>-8.5, 72.0, 157.5</code> (yaw 0, pitch 0) в <code>lobby</code> (по актуальной конфигурации/сводке; платформа Y≈71).</li>
+            <li><b>Join:</b> при входе телепорт в лобби.</li>
+            <li><b>Respawn:</b> <code>force-lobby-respawn: true</code> — после смерти возрождение в лобби (на спавн лобби).</li>
+            <li><b>Платформа спавна:</b> включена, материал <code>WHITE_CONCRETE</code>, size 5 (чтобы не падать в void).</li>
+            <li><b>Команды:</b> <code>/spawn</code> (essentials.spawn), <code>/setspawn</code> (essentials.setspawn, op), <code>/hub</code> (sigmagrif.hub), служебная <code>/sgspawn</code> (sigmagrif.sgspawn, op). <code>/survival</code> упоминался в документации (perm sigmagrif.survival), наличие зависит от актуальной сборки.</li>
+          </ul>
+          <details><summary>config.yml (SigmaGrifSpawn, ключевые значения)</summary>
+<pre>default-world: lobby
+main-world: world
+spawns:
+  lobby: { x: -8.5, y: 68.0, z: 157.5, yaw: 0.0, pitch: 0.0 }
+force-lobby-respawn: true
+spawn-platform: { enabled: true, material: WHITE_CONCRETE, size: 5 }
+world-settings.lobby:
+  permanent-day: true, time: 6000, disable-weather: true,
+  disable-mob-spawning: true, disable-fire-tick: true,
+  keep-spawn-loaded: true, difficulty: NORMAL, pvp: false</pre>
+          <p class="small muted">Примечание: в исторической заметке фигурировала высота ~68; фактическая точка спавна/платформа по сводке — около Y 71/72. Проверяйте актуальный спавн на live.</p>
+          </details>
+        </div>
+        <div class="card">
+          <h3>SigmaGrifMenu (v1.2)</h3>
+          <ul>
+            <li>При входе выдаётся зачарованная книга «Меню»; ПКМ открывает GUI-меню.</li>
+            <li>Разделы: варп spawn, РТП, Донаты, Аукцион (<code>/ah</code>), Шоп (<code>/shop</code>), крафты (по описанию плагина).</li>
+            <li>Команда: <code>/menu</code> (perm <code>sigmagrif.menu.use</code>, default true).</li>
+            <li>Варп spawn: <code>lobby -8.5, 68.0, 157.5</code>.</li>
+          </ul>
+          <details><summary>Меню «Донаты» (config.yml плагина — локальные значения)</summary>
+            <ul class="small">
+              <li>Ссылка: https://www.mcserverhost.com/donate, username: SigmaGrif</li>
+              <li>Пакеты в конфиге меню: VIP 99₽, Premium 199₽, Deluxe 299₽, Elite 499₽, Legend 999₽ (возможности описаны в конфиге меню).</li>
+            </ul>
+            <p class="small warn">Внимание: это данные <code>SigmaGrifMenu/config.yml</code> и они отличаются от актуальной 12-ранговой системы доната (SigmaMini…SIGMA), внедрённой в LuckPerms/Essentials. Приведите меню/донат-инфо в соответствие при необходимости.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="plugins">
+      <h2>Плагины и системы (ключевые)</h2>
+      <div class="card">
+        <div class="table-wrap"><table>
+          <tr><th>Плагин</th><th>Версия/тип</th><th>Назначение</th></tr>
+          <tr><td>SigmaGrifSpawn</td><td>v1.3 (custom)</td><td>Лобби-void мир, join/respawn в лобби, платформа, правила мира, /spawn /setspawn /hub /sgspawn, перехват /rtp (из лобби — кастомный RTP в world).</td></tr>
+          <tr><td>SigmaGrifClaims</td><td>v1.2 (custom, задеплоен)</td><td>Приваты блоками-рунами, per-rank лимиты, protected-zones, контроль /fly (спавн/свои регионы), защита контейнеров/дверей/животных.</td></tr>
+          <tr><td>SigmaGrifAutoMine</td><td>v1.0 (custom)</td><td>Автошахта: периодическая регенерация блоков в заданной области лобби.</td></tr>
+          <tr><td>SigmaGrifBuyer</td><td>v1.0 (custom)</td><td>GUI-скупщик шахтёрских ресурсов (/buyer), динамические цены/спрос, продажа через Vault.</td></tr>
+          <tr><td>SigmaGrifTNT</td><td>v1.2 (custom)</td><td>Кастомный TNT: 4 вида, крафты, своя физика взрывов (/customtnt, fuse/save настройки).</td></tr>
+          <tr><td>SigmaGrifMenu</td><td>v1.2 (custom)</td><td>Меню-книга при входе, GUI с разделами (варпы, RTP, донаты, /ah, /shop, крафты).</td></tr>
+          <tr><td>Crates</td><td>Crates (1.15 jar в пакете)</td><td>Кейсы в лобби (лавовый/престиж), ключи с маркерами, анимация, призы из results-файлов.</td></tr>
+          <tr><td>LuckPerms</td><td>v5.5.71 (H2)</td><td>Группы/наследование/веса/префиксы/пермишены/мета, бусты Jobs, слоты AH, лимиты приватов; <code>lp sync</code>.</td></tr>
+          <tr><td>EssentialsX</td><td>v2.19.7</td><td>Базовые команды, дома, киты, кулдауны, чат-пермишены и утилиты (/heal,/feed,/repair,/fly и т.д.).</td></tr>
+          <tr><td>TAB</td><td>v5.3.2</td><td>Сортировка/отображение групп, primary-group-finding-list, placeholder replacements, префиксы из LuckPerms.</td></tr>
+          <tr><td>Jobs Reborn</td><td>v5.2.6.7</td><td>Профессии, бусты оплаты по permission (money), WorldGuard detected.</td></tr>
+          <tr><td>BetterRTP</td><td>v3.6.13</td><td>Случайный телепорт (RTP), кулдауны/задержка, PermissionGroup кулдауны по рангам.</td></tr>
+          <tr><td>AuctionHouse</td><td>Classic 2.2.4</td><td>Аукцион /ah, лимиты слотов через permission <code>auctionhouse.auctions.N</code>.</td></tr>
+          <tr><td>PrimeSeller</td><td>установлен</td><td>Скупщик/продажа (конфиги присутствуют); per-group множители не подтверждены.</td></tr>
+          <tr><td>Vault</td><td>—</td><td>Экономика/интеграции (используется SigmaGrifBuyer и др.).</td></tr>
+          <tr><td>Citizens</td><td>—</td><td>NPC (покупатель шахты). В логах: trait protected у NPC 0 не загружается (pre-existing).</td></tr>
+          <tr><td>DecentHolograms</td><td>—</td><td>Голограммы (загружено 2; в т.ч. надпись/подсказки в лобби, голограммы кейсов по конфигам).</td></tr>
+          <tr><td>WorldGuard, WorldEdit, Chatty, dtlTraders и др.</td><td>установлены (по логам/конфигам)</td><td>Регионы/защита, чат, торговцы и прочие подсистемы.</td></tr>
+        </table></div>
+        <p class="small muted">Список отражает ключевые плагины, выявленные из локальных конфигов, исходников и логов старта; полный перечень на live может быть шире.</p>
+      </div>
+    </section>
+
+    <section id="economy">
+      <h2>Экономика и торговля</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>SigmaGrifBuyer (/buyer)</h3>
+          <ul>
+            <li>GUI-скупщик шахтёрских ресурсов (Vault/Economy), звук/сообщения при продаже, откат при ошибке транзакции.</li>
+            <li>Действия: ЛКМ — 1 шт, ПКМ — 64 шт, Shift+ЛКМ — всё данного ресурса; кнопка «Продать всё» (hopper) — все доступные ресурсы.</li>
+            <li><b>Динамика цен:</b> каждые ~30–60 мин выбираются 3–5 ресурсов с повышенным спросом (x1.5–x2.0). Штраф предложения: цена падает при массовой продаже (≈ -1% за стак проданного в цикле, минимум x0.5), сбрасывается на обновлении цикла. Таймер обновления отображается в меню.</li>
+            <li><b>Ресурсы и базовые цены (за 1 шт):</b></li>
+          </ul>
+          <details><summary>Прайс-лист (база)</summary>
+<pre>Булыжник 0.5, Камень 0.8, Андезит 0.6, Диорит 0.6, Гранит 0.6, Базальт 1.0, Чернит 1.2,
+Уголь 2.0, Железный слиток 5.0, Золотой слиток 8.0, Лазурит 1.5, Редстоун 1.2,
+Алмаз 50.0, Изумруд 40.0, Незер-кварц 2.5, Незеритовый лом 80.0, Незеритовый слиток 350.0,
+Обсидиан 10.0, Плачущий обсидиан 15.0, Древние обломки 120.0</pre>
+          </details>
+        </div>
+        <div class="card">
+          <h3>AuctionHouse и PrimeSeller</h3>
+          <ul>
+            <li><b>AuctionHouse Classic 2.2.4:</b> <code>defaultMaxListings: 5</code>. Лимиты слотов по рангам выдаются permission <code>auctionhouse.auctions.&lt;N&gt;</code> (см. раздел рангов). Требуется проверка, что версия берёт лимит из permission.</li>
+            <li>Глобально (по конфигу): <code>salesTax: 0.0</code>, <code>maxSalesTax: 100000</code>, <code>maxSellPrice: 100000</code>. Per-group сниженная комиссия (Master) и повышенные/максимальные торговые лимиты (Legend+) в конфиге явно не выражены — зависят от возможностей плагина.</li>
+            <li><b>PrimeSeller:</b> конфиги присутствуют (<code>config/items/menu.yml</code>), но явных per-group множителей продажи в конфиге не найдено. Отдельный множитель для SigmaElite требует поддержки версии плагина/проверки на live.</li>
+            <li>На сервере сосуществуют кастомный <b>SigmaGrifBuyer</b> и PrimeSeller; фактически используемый скупщик/интеграции — сверять на live.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="ranks">
+      <h2>12 рангов — сводка</h2>
+      <div class="card">
+        <p class="small muted">Система применена на live (LuckPerms H2, группы/веса/префиксы/наследование/пермишены/мета, <code>lp sync</code>). Группа <code>sigma</code> — эксклюзив, выдаётся только вручную. Цепочка наследования: <code>default → sigmamini → sigmalite → sigmacore → sigmaprime → sigmapro → sigmaelite → sigmaultra → sigmamaster → sigmalegend → sigmamythic → sigmaapex → sigma</code>.</p>
+        <div class="table-wrap"><table>
+          <tr><th>#</th><th>Ранг</th><th>Группа</th><th>Вес</th><th>Префикс</th><th>Цена</th><th>Дома</th><th>Слоты /ah (итого)</th><th>Jobs $</th><th>Приваты (лимит)</th></tr>
+          <tr><td>1</td><td>SigmaMini</td><td><code>sigmamini</code></td><td>10</td><td>&amp;7[&amp;fMini&amp;7]</td><td>49₽</td><td>2</td><td>5 (база)</td><td>+2%</td><td>3 (база)</td></tr>
+          <tr><td>2</td><td>SigmaLite</td><td><code>sigmalite</code></td><td>20</td><td>&amp;7[&amp;aLite&amp;7]</td><td>99₽</td><td>3</td><td>5</td><td>+5%</td><td>3</td></tr>
+          <tr><td>3</td><td>SigmaCore</td><td><code>sigmacore</code></td><td>30</td><td>&amp;7[&amp;2Core&amp;7]</td><td>179₽</td><td>4</td><td>6 (+1)</td><td>+7%</td><td>3</td></tr>
+          <tr><td>4</td><td>SigmaPrime</td><td><code>sigmaprime</code></td><td>40</td><td>&amp;7[&amp;bPrime&amp;7]</td><td>299₽</td><td>5</td><td>7 (+2)</td><td>+10%</td><td>3</td></tr>
+          <tr><td>5</td><td>SigmaPro</td><td><code>sigmapro</code></td><td>50</td><td>&amp;7[&amp;3Pro&amp;7]</td><td>449₽</td><td>6</td><td>8 (+3)</td><td>+12%</td><td>5</td></tr>
+          <tr><td>6</td><td>SigmaElite</td><td><code>sigmaelite</code></td><td>60</td><td>&amp;7[&amp;eElite&amp;7]</td><td>649₽</td><td>8</td><td>9 (+4)</td><td>+15%</td><td>6</td></tr>
+          <tr><td>7</td><td>SigmaUltra</td><td><code>sigmaultra</code></td><td>70</td><td>&amp;7[&amp;6Ultra&amp;7]</td><td>899₽</td><td>10</td><td>10 (+5)</td><td>+20%</td><td>8</td></tr>
+          <tr><td>8</td><td>SigmaMaster</td><td><code>sigmamaster</code></td><td>80</td><td>&amp;7[&amp;dMaster&amp;7]</td><td>1199₽</td><td>12</td><td>11 (+6)</td><td>+25%</td><td>10</td></tr>
+          <tr><td>9</td><td>SigmaLegend</td><td><code>sigmalegend</code></td><td>90</td><td>&amp;7[&amp;5Legend&amp;7]</td><td>1599₽</td><td>15</td><td>13 (+8)</td><td>+30%</td><td>12</td></tr>
+          <tr><td>10</td><td>SigmaMythic</td><td><code>sigmamythic</code></td><td>100</td><td>&amp;7[&amp;c&amp;lMythic&amp;7]</td><td>2199₽</td><td>18</td><td>15 (+10)</td><td>+35%</td><td>15</td></tr>
+          <tr><td>11</td><td>SigmaApex</td><td><code>sigmaapex</code></td><td>110</td><td>&amp;8[&amp;4&amp;lApex&amp;8]</td><td>2999₽</td><td>25</td><td>50 (макс.)</td><td>+40%</td><td>30</td></tr>
+          <tr><td>12</td><td>SIGMA</td><td><code>sigma</code></td><td>120</td><td>&amp;0[&amp;d&amp;lSIGMA&amp;0]</td><td>эксклюзив</td><td>50</td><td>50 (макс.)</td><td>+40%</td><td>∞</td></tr>
+        </table></div>
+      </div>
+    </section>
+
+    <section id="perks">
+      <h2>Права и перки по рангам</h2>
+      <div class="card">
+        <div class="table-wrap"><table>
+          <tr><th>Ранг</th><th>Ключевые перки и пермишены (наследуются вверх по цепочке)</th><th>Киты</th></tr>
+          <tr><td>SigmaMini</td><td><code>essentials.joinfullserver</code>, цвет чата (<code>essentials.chat.color</code>, <code>chatty.chat.color</code>), 2 дома</td><td>sigmamini</td></tr>
+          <tr><td>SigmaLite</td><td><code>/hat</code> (<code>essentials.hat</code>), сниженный КД /tpa,/home (bypass teleport cooldown/timer), 3 дома</td><td>sigmalite</td></tr>
+          <tr><td>SigmaCore</td><td><code>/craft</code> (<code>essentials.workbench</code>), расшир. формат/цвета чата (<code>essentials.chat.format/magic</code>, <code>chatty.chat.format</code>), 4 дома, +1 слот AH</td><td>sigmacore</td></tr>
+          <tr><td>SigmaPrime</td><td><code>/ec</code> (<code>essentials.enderchest</code>), <code>/back</code> + <code>essentials.back.ondeath</code>, 5 домов, +2 слота AH (КД /back 15м и сниженный /rtp — политикой/конфигом)</td><td>sigmaprime</td></tr>
+          <tr><td>SigmaPro</td><td><code>/repair</code> (hand) (<code>essentials.repair(.hand)</code>), <code>/near</code>, 6 домов, +3 слота AH, расшир. лимит приватов (5)</td><td>sigmapro</td></tr>
+          <tr><td>SigmaElite</td><td><code>/feed</code>, <code>/ext</code>, сниженный КД /back (<code>essentials.back.cooldown.bypass</code>), 8 домов, +4 слота AH, множитель PrimeSeller — если поддерживается</td><td>sigmaelite</td></tr>
+          <tr><td>SigmaUltra</td><td><code>/heal</code>, <code>/repair all</code> (<code>essentials.repair.all</code>), 10 домов, +5 слотов AH</td><td>sigmaultra</td></tr>
+          <tr><td>SigmaMaster</td><td><code>/ptime</code>, <code>/pweather</code>, расшир. формат (url), 12 домов, +6 слотов AH, сниженная комиссия AH — если поддерживается</td><td>sigmamaster</td></tr>
+          <tr><td>SigmaLegend</td><td>Сниженный КД /heal,/feed,/back (bypass), быстрый /rtp (<code>essentials.tpr.cooldown.bypass</code>), 15 домов, +8 слотов AH, бонус-кит</td><td>sigmalegend, sigmalegend_bonus</td></tr>
+          <tr><td>SigmaMythic</td><td>Минимальные КД утилит (bypass heal/feed/repair), <code>/fly</code> (<code>essentials.fly</code>, <b>только в разрешённых зонах</b>), 18 домов, +10 слотов AH, weekly-кит</td><td>sigmamythic, sigmamythic_weekly</td></tr>
+          <tr><td>SigmaApex</td><td>Лучшие КД, максимум удобства/лимитов (без god/PvP-имбы), /fly, 25 домов, макс. AH, weekly-кит</td><td>sigmaapex, sigmaapex_weekly</td></tr>
+          <tr><td>SIGMA</td><td>Функционал Apex, /fly, 50 домов, макс. AH, эксклюзив (ручная выдача), косметика/персональные фишки — по решению админов</td><td>sigma, sigma_weekly</td></tr>
+        </table></div>
+      </div>
+    </section>
+
+    <section id="kits">
+      <h2>Киты (EssentialsX, 1.16.5)</h2>
+      <div class="card">
+        <p>Кулдауны: <b>24ч = 86400s</b>, <b>7д = 604800s</b>. Сбалансировано (без OP PvP-имбы). Legacy-киты сохранены: <code>tools</code>, <code>dtools</code>, <code>notch</code>, <code>color</code>, <code>firework</code>, <code>start</code> (если есть в live).</p>
+        <div class="table-wrap"><table>
+          <tr><th>Кит</th><th>КД</th><th>Содержимое</th></tr>
+          <tr><td>sigmamini</td><td>24ч</td><td>Каменные меч/кирка/топор/лопата, 16 хлеба, 16 факелов</td></tr>
+          <tr><td>sigmalite</td><td>24ч</td><td>Железные меч/кирка/топор/лопата, 16 жареной говядины, 4 золотых яблока</td></tr>
+          <tr><td>sigmacore</td><td>24ч</td><td>Железные меч/кирка/топор/лопата/мотыга, 24 говядины, 8 золотых яблок, 32 факела</td></tr>
+          <tr><td>sigmaprime</td><td>24ч</td><td>Железные инструменты (eff/unb), полный железный сет (prot1/unb1), 32 говядины, 8 золотых яблок, 16 стрел</td></tr>
+          <tr><td>sigmapro</td><td>24ч</td><td>Алмазные меч/кирка/топор/лопата (eff3/unb2), 16 железа, 8 золота, 6 изумрудов, 32 говядины, 8 пузырьков опыта</td></tr>
+          <tr><td>sigmaelite</td><td>24ч</td><td>Алмазные инструменты и полный алмазный сет (умеренные чары), зелья: скорость I (3м), лечение I, регенерация I (45с), 32 говядины, 16 опыта</td></tr>
+          <tr><td>sigmaultra</td><td>24ч</td><td>Алмазные кирка (eff3/unb3/fortune1), топор/лопата/мотыга, ресурсы (Fe/Au/2 алмаза/8 изумрудов/8 обсидиана), 8 золотых яблок, 32 говядины, 16 опыта</td></tr>
+          <tr><td>sigmamaster</td><td>24ч</td><td>Алмазные инструменты (eff3/unb3), Fe/Au/3 алмаза/8 изумрудов/32 кварца/16 обсидиана, 16 опыта, 32 говядины, 64 факела</td></tr>
+          <tr><td>sigmalegend</td><td>24ч</td><td>Алмазные инструменты (eff4/unb3, кирка fortune1), ресурсы (Fe/Au/5 алмазов/12 изумрудов/лазурит/редстоун/24 обсидиана), 24 опыта, 48 говядины, 16 золотой моркови</td></tr>
+          <tr><td>sigmalegend_bonus</td><td>7д</td><td>4 алмаза, 16 изумрудов, 1 ancient debris, 64 кварца, 32 опыта, 4 железных блока, 2 золотых блока</td></tr>
+          <tr><td>sigmamythic</td><td>24ч</td><td>Алмазные инструменты (eff4/unb3, fortune2/silk), расширенный набор ресурсов (вкл. 8 алмазов, 16 изумрудов, 32 обсидиана, 8 crying obsidian), 32 опыта, 24 моркови, 4 эндер-жемчуга</td></tr>
+          <tr><td>sigmamythic_weekly</td><td>7д</td><td>6 алмазов, 24 изумруда, 2 ancient debris, 1 netherite scrap, 16 кварцевых блоков, 48 опыта, блоки Fe/Au</td></tr>
+          <tr><td>sigmaapex</td><td>24ч</td><td>Алмазные инструменты (eff5/unb3, fortune2/silk), крупный набор ресурсов (12 алмазов, 24 изумруда, 48 опыта, обсидиан/crying, 8 жемчуга, 2 shulker shell и др.)</td></tr>
+          <tr><td>sigmaapex_weekly</td><td>7д</td><td>10 алмазов, 32 изумруда, 3 ancient debris, 2 netherite scrap, 64 опыта, блоки/кварц, 2 shulker shell</td></tr>
+          <tr><td>sigma</td><td>24ч</td><td>Алмазные инструменты (eff5/unb3, fortune3/silk), максимум ресурсов (16 алмазов, 32 изумруда, 64 опыта, блоки, 4 shulker shell и др.)</td></tr>
+          <tr><td>sigma_weekly</td><td>7д</td><td>12 алмазов, 40 изумрудов, 4 ancient debris, 3 netherite scrap, 64 опыта, блоки (вкл. алмазный/изумрудные), 4 shulker shell</td></tr>
+        </table></div>
+        <p class="small note">Синтаксис предметов/зельевых эффектов EssentialsX зависит от сборки — после деплоя проверять <code>/kit &lt;name&gt;</code> на тест-аккаунте (особенно формат зелий).</p>
+      </div>
+    </section>
+
+    <section id="limits">
+      <h2>Лимиты, кулдауны, бусты</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Дома и кулдауны (Essentials, live/merged)</h3>
+          <ul>
+            <li><b>sethome-multiple:</b> default 3, vip 5, staff 10; ранги — sigmamini 2, sigmalite 3, sigmacore 4, sigmaprime 5, sigmapro 6, sigmaelite 8, sigmaultra 10, sigmamaster 12, sigmalegend 15, sigmamythic 18, sigmaapex 25, sigma 50 (нужны <code>essentials.sethome.multiple</code> и <code>essentials.sethome.multiple.&lt;key&gt;</code>).</li>
+            <li><b>heal-cooldown:</b> 1200с (20 мин, базово; у старших рангов bypass-пермишены).</li>
+            <li><b>command-cooldowns:</b> <code>repair: 10800</code> (3ч), <code>feed: 600</code> (10 мин). <code>command-cooldown-persistence: true</code>.</li>
+            <li>Снижения КД реализованы частично через bypass-пермишены (Lite+ teleport, Elite/Legend back, Mythic+ heal/feed/repair и т.д.). Точная гранулярность «/repair hand 60м vs /repair all 3ч», «/back 15м после смерти (Prime)», тонкие КД /tpa,/home,/rtp вне лобби — не полностью покрывается одной глобальной шкалой Essentials и требует проверки/донастройки.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Jobs Reborn (бусты)</h3>
+          <ul>
+            <li>Бусты по деньгам выдаются через LuckPerms: <code>jobs.boost.all.money.&lt;X&gt;</code> (0.02 … 0.40).</li>
+            <li><b>generalConfig (ключевые):</b> <code>highest-permission-boost: true</code>, <code>add-permission-boost: false</code> — чтобы при наследовании применялся наибольший буст ранга без суммирования. <code>boost-persistence: true</code>.</li>
+            <li>Соответствие: Mini +2%, Lite +5%, Core +7%, Prime +10%, Pro +12%, Elite +15%, Ultra +20%, Master +25%, Legend +30%, Mythic +35%, Apex/SIGMA +40%.</li>
+          </ul>
+          <h3>TAB (отображение)</h3>
+          <ul class="small">
+            <li>Сортировка: <code>GROUPS:sigma,sigmaapex,sigmamythic,sigmalegend,sigmamaster,sigmaultra,sigmaelite,sigmapro,sigmaprime,sigmacore,sigmalite,sigmamini,owner,admin,mod,helper,vip,default</code>.</li>
+            <li><code>primary-group-finding-list</code> включает все 12 рангов. Замены отображаемых имён групп настроены (Mini…SIGMA). Префиксы берутся из LuckPerms meta.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <h3>LuckPerms — выдаваемые пермишены/мета (ключевое)</h3>
+        <ul class="small">
+          <li>Префиксы: <code>meta setprefix</code> для каждой группы (см. таблицу рангов).</li>
+          <li>Дома: <code>essentials.sethome.multiple</code> + <code>essentials.sethome.multiple.&lt;group&gt;</code>.</li>
+          <li>Киты: <code>essentials.kits.&lt;kitname&gt;</code> (включая bonus/weekly).</li>
+          <li>AH слоты: <code>auctionhouse.auctions.6/7/8/9/10/11/13/15/50</code> по рангам.</li>
+          <li>Jobs: <code>jobs.boost.all.money.0.02..0.40</code>.</li>
+          <li>Приваты (SigmaGrifClaims v1.2): <code>sigmagrifclaims.limit.5/6/8/10/12/15/30</code>, <code>sigmagrifclaims.limit.unlimited</code> (sigma).</li>
+          <li>Полный набор команд — в <code>SigmaGrif_Ranks_Setup/luckperms_ranks.txt</code>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="claims">
+      <h2>Приваты (SigmaGrifClaims v1.2) и /fly</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Приваты блоками-рунами</h3>
+          <ul>
+            <li>Создание: ПКМ блоком-жетоном по земле — создаётся квадратная зона защиты вокруг точки. Блок расходуется (<code>consume-block: true</code>) и/или остаётся меткой (<code>marker-block: true</code>, сломать метку = снять приват).</li>
+            <li><b>Блок → сторона:</b> QUARTZ 5x5, IRON 7x7, GOLD 9x9, DIAMOND 11x11, EMERALD 13x13, NETHERITE 15x15.</li>
+            <li><b>Лимиты:</b> базово 3. Per-rank через <code>sigmagrifclaims.limit.&lt;N&gt;</code> / <code>.unlimited</code> (Pro 5, Elite 6, Ultra 8, Master 10, Legend 12, Mythic 15, Apex 30, SIGMA безлимит).</li>
+            <li><b>Защита:</b> контейнеры/двери/животные защищены в чужих приватов, PvP в привате по умолчанию выключен (<code>pvp-in-claims: false</code>).</li>
+            <li><b>Команды:</b> <code>/claims</code> (myclaims, claimlist), <code>/unclaim</code> (delclaim, abandonclaim), <code>/trust &lt;ник&gt;</code>, <code>/untrust &lt;ник&gt;</code>.</li>
+          </ul>
+          <h3>Защищённые зоны (protected-zones)</h3>
+          <ul class="small">
+            <li><b>city</b> (world): x 9999821..10000021, y 0..319, z 9999538..9999738, allow: <code>42265dc5-0eca-3dcb-8bb7-996223a4f68d</code>.</li>
+            <li><b>donate</b> (lobby): x -36..-26, y 56..86, z 120..132, allow: <code>42265dc5-0eca-3dcb-8bb7-996223a4f68d</code> (зона вокруг кейсов).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Контроль /fly (для рангов с essentials.fly: Mythic/Apex/SIGMA)</h3>
+          <ul>
+            <li><code>fly-control-enabled: true</code>, <code>fly-spawn-world: lobby</code>.</li>
+            <li><b>Разрешён:</b> в мире спавна <code>lobby</code>, в своих регионах (приват владельца или trusted), в защищённых зонах, где игроку разрешено строить.</li>
+            <li><b>Отключается:</b> при перемещении в чужой приват/неразрешённую территорию; при PvP (урон между игроками, в т.ч. снаряды).</li>
+            <li>Применяется к игрокам с <code>essentials.fly</code> (не creative/spectator), без bypass/op. Bypass: <code>essentials.fly.bypass</code> / <code>sigmagrifclaims.fly.bypass</code>.</li>
+          </ul>
+          <div class="note small"><b>Caveat:</b> «спавн» основного мира <code>world</code> вне защищённых зон/своих приватов автоматически не считается разрешённой зоной полёта — при необходимости выделить зоной. Полный контроль на чужих территориях вне системы приватов зависит от механизмов защиты (WG/др.).</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rtp">
+      <h2>RTP и перемещение</h2>
+      <div class="card">
+        <h3>BetterRTP (v3.6.13) + перехват SigmaGrifSpawn</h3>
+        <ul>
+          <li><b>Важно:</b> <code>/rtp</code> из <code>lobby</code> перехватывается <b>SigmaGrifSpawn</b> — выполняется собственный прямой случайный телепорт в <code>world</code> (радиус ~1000 от 0,0, посадка на поверхность). В этом сценарии кулдауны/логика BetterRTP могут не применяться.</li>
+          <li>Вне лобби (где команда обрабатывается BetterRTP) действуют настройки BetterRTP: default radius 10–1000, center 0,0, delay 5с (cancel on move), queue on, cooldown 600с по умолчанию, миры prison/creative отключены.</li>
+          <li><b>PermissionGroup cooldowns (world):</b> sigmaprime/pro/elite/ultra — 300с; sigmamaster — 180с; sigmalegend — 60с; sigmamythic/sigmaapex/sigma — 30с.</li>
+          <li>Respect-флаги к WG/claim-плагинам в конфиге выключены (по текущему конфигу).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="npc">
+      <h2>NPC, кейсы, меню, автошахта, TNT</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Citizens NPC (покупатель)</h3>
+          <ul>
+            <li>NPC id 0 (UUID <code>bd2539f6-b8e9-499d-89a2-57fa0b043390</code>), скин <code>Miner</code>, invulnerable, <b>локация:</b> <code>lobby -63.5, 72.0, 230.5</code>.</li>
+            <li>Действия: ЛКМ/ПКМ → <code>/buyer</code> (открывает GUI скупщика).</li>
+            <li>Голограммы (DecentHolograms) настроены рядом (2 голограммы загружались при старте; детали в конфигах DH).</li>
+          </ul>
+          <div class="note small"><b>Известно:</b> при старте логируется <code>[Citizens] The trait protected failed to load for NPC ID: 0</code> (pre-existing). Команда NPC: использовать префикс <code>citizens:npc</code> (ZNPCsPlus может перехватывать <code>/npc</code>).</div>
+        </div>
+        <div class="card">
+          <h3>Кейсы (Crates, лобби)</h3>
+          <ul>
+            <li><b>Лавовый кейс:</b> <code>lobby -31, 68, 125</code>, блок ORANGE_SHULKER_BOX, ключ TRIPWIRE_HOOK «Ключ от кейса» (marker 1), призы <code>results.yml</code>, тема lava.</li>
+            <li><b>Престиж кейс:</b> <code>lobby -31, 68, 127</code>, блок RED_SHULKER_BOX, ключ NETHER_STAR «Престиж-ключ» (marker 2), призы <code>results-premium.yml</code>, тема prestige.</li>
+            <li>Анимация включена (24 шага, замедление 1→4 тика). Анонсы в чат отключены. Защита зоны кейсов — <code>protected-zones.donate</code> в SigmaGrifClaims.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>SigmaGrifAutoMine (v1.0)</h3>
+          <ul>
+            <li>Регион: <code>lobby (-57,71,233) — (-63,60,239)</code>.</li>
+            <li>Регенерация: первое заполнение через ~5с после старта, затем каждые 10 минут (полная перезапись блоков области).</li>
+            <li><b>Палитра (веса):</b> STONE 57%, COAL_ORE 17%, IRON_ORE 10%, GOLD_ORE 4%, LAPIS_ORE 2%, REDSTONE_ORE 4%, DIAMOND_ORE 4%, EMERALD_ORE 2%.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>SigmaGrifTNT (v1.2)</h3>
+          <ul>
+            <li>Кастомный TNT: 4 вида, собственные крафты и физика взрывов.</li>
+            <li>Команда: <code>/customtnt give &lt;игрок&gt; &lt;тип&gt; &lt;количество&gt;</code> (perm <code>customtnt.admin</code>, op).</li>
+            <li>config: <code>fuse-ticks: 80</code> (4с, совместимость с пушками), <code>save-interval-seconds: 300</code>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="caveats">
+      <h2>Ограничения, caveats и заметки</h2>
+      <div class="card">
+        <ul>
+          <li class="warn"><b>RTP из лобби:</b> перехватывается SigmaGrifSpawn (кастомный телепорт в world), поэтому настройки/кулдауны BetterRTP в этом сценарии могут не действовать.</li>
+          <li class="warn"><b>/fly:</b> Mythic+ имеют <code>essentials.fly</code>; ограничение enforced SigmaGrifClaims v1.2 (lobby, свои/доверенные приваты, разрешённые protected-zones; авто-отключение в чужих зонах и PvP). Спавн основного мира <code>world</code> отдельно не размечен — нужна protected-zone/настройка при необходимости. Контроль на территориях вне приватов зависит от WG/других механизмов.</li>
+          <li class="warn"><b>Лимиты приватов:</b> глобальный базис 3 в конфиге, расширение по рангам реализовано в v1.2 через <code>sigmagrifclaims.limit.*</code> (LP-пермишены выданы).</li>
+          <li class="warn"><b>Кулдауны (тонкая гранулярность):</b> базовые значения заданы в Essentials; часть снижений — bypass-пермишены. Раздельные требования (repair hand 60м vs all 3ч, back 15м после смерти для Prime, точные per-rank /tpa,/home,/rtp) могут требовать доп. плагина/настройки.</li>
+          <li class="warn"><b>AH/PrimeSeller:</b> слоты AH — через <code>auctionhouse.auctions.N</code> (проверить поведение версии). Per-group комиссия/торговые лимиты AH и per-group множитель PrimeSeller (Elite) не подтверждены конфигом — зависят от возможностей плагинов.</li>
+          <li class="warn"><b>Несоответствие данных меню:</b> <code>SigmaGrifMenu/config.yml</code> содержит старый перечень донат-пакетов (VIP/Premium/Deluxe/Elite/Legend) — отличается от актуальной 12-ранговой линейки.</li>
+          <li class="warn"><b>Citizens:</b> NPC 0 — <code>trait protected failed to load</code> (pre-existing). Использовать <code>citizens:npc</code>; при правках saves — stop/upload/wake.</li>
+          <li class="warn"><b>Секреты:</b> MCSH bearer-токен (mcsh_token/_mcsh_at) не публикуется; обновлять при 401. Локальные пути артефактов приведены для администрирования.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Проверка после настройки (чек-лист)</h3>
+        <ul class="small">
+          <li>LP: группы/веса 10–120, префиксы, наследование, <code>lp user &lt;nick&gt; info</code>.</li>
+          <li>Дома/киты: лимиты sethome и выдача/КД <code>/kit ...</code> (вкл. bonus/weekly), формат зелий.</li>
+          <li>Jobs: начисление соответствует бусту ранга (без суммирования).</li>
+          <li>AH: слоты по рангу; команды по доступу (hat/craft/ec/back/feed/ext/heal/repair/near/ptime/pweather/fly).</li>
+          <li>/fly: разрешён в lobby/своих регионах, отключается в чужих зонах и PvP (Mythic+).</li>
+          <li>Приваты: <code>/claims</code> показывает N/лимит; отказ сверх лимита.</li>
+          <li>RTP: из world — КД BetterRTP по группе; из lobby — перехват SigmaGrifSpawn.</li>
+          <li>TAB/Chatty: сортировка, префикс, отображение. Логи: нет ошибок YAML/загрузки.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="files">
+      <h2>Файлы и артефакты (локальные)</h2>
+      <div class="card">
+        <div class="table-wrap"><table>
+          <tr><th>Путь</th><th>Содержимое</th></tr>
+          <tr><td><code>C:\Users\KOMPUKTER\Downloads\SigmaGrif_Ranks_Setup\</code></td><td>README, <code>luckperms_ranks.txt</code>, <code>apply_luckperms.js</code>, <code>kits.yml</code>, <code>essentials_adjustments.yml</code>, <code>tab_groups_patch.yml</code></td></tr>
+          <tr><td><code>...\SigmaGrif_Spawn_plugin\</code></td><td>Исходники/конфиг/jar SigmaGrifSpawn (v1.3)</td></tr>
+          <tr><td><code>...\SigmaGrif_Claims_plugin\</code></td><td>Исходники/конфиг/jar SigmaGrifClaims (v1.2, лимиты и fly-контроль)</td></tr>
+          <tr><td><code>...\SigmaGrif_AutoMine_plugin\</code></td><td>Исходники SigmaGrifAutoMine (v1.0)</td></tr>
+          <tr><td><code>...\SigmaGrif_Buyer_plugin\</code></td><td>Исходники SigmaGrifBuyer (v1.0)</td></tr>
+          <tr><td><code>...\SigmaGrif_TNT_plugin\</code></td><td>Исходники/конфиг/jar SigmaGrifTNT (v1.2)</td></tr>
+          <tr><td><code>...\SigmaGrif_Menu_plugin\</code></td><td>Исходники/конфиг/jar SigmaGrifMenu (v1.2)</td></tr>
+          <tr><td><code>...\SigmaGrif_Crates_plugin\</code></td><td>Конфиги/ресурсы кейсов (Crates)</td></tr>
+          <tr><td><code>...\SigmaGrif_lobby.md</code></td><td>Документация по лобби/спавну/RTP/меню</td></tr>
+          <tr><td><code>...\SigmaGrif_transfer\mcsh_token.txt</code></td><td>Рабочий MCSH bearer-токен (секрет, не публиковать)</td></tr>
+          <tr><td><code>%TEMP%\opencode\ranks_live\merged\</code></td><td>Слитые Essentials/TAB/Jobs конфиги (загружались на сервер)</td></tr>
+          <tr><td><code>%TEMP%\opencode\ranks_tune\</code></td><td>Live/патченные конфиги (BetterRTP, SigmaGrifClaims и др.)</td></tr>
+        </table></div>
+        <p class="small muted">Сгенерировано на основе локальных файлов, конфигов и сводки по серверу SigmaGrif (430986da-53ef-42c1-91ff-07658f7272e5). Дата подготовки данных: 2026-11-19.</p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
