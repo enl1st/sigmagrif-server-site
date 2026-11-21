@@ -69,6 +69,7 @@
     <a href="#claims">Приваты и /fly</a>
     <a href="#rtp">RTP и перемещение</a>
     <a href="#npc">NPC, кейсы, меню, шахта, TNT</a>
+    <a href="#consumables">Расходники, руны, контрабандист</a>
     <a href="#caveats">Ограничения и caveats</a>
     <a href="#files">Файлы и артефакты</a>
   </nav>
@@ -157,7 +158,14 @@ world-settings.lobby:
           <tr><td>SigmaGrifBuyer</td><td>v1.0 (custom)</td><td>GUI-скупщик шахтёрских ресурсов (/buyer), динамические цены/спрос, продажа через Vault.</td></tr>
           <tr><td>SigmaGrifTNT</td><td>v1.2 (custom)</td><td>Кастомный TNT: 4 вида, крафты, своя физика взрывов (/customtnt, fuse/save настройки).</td></tr>
           <tr><td>SigmaGrifMenu</td><td>v1.2 (custom)</td><td>Меню-книга при входе, GUI с разделами (варпы, RTP, донаты, /ah, /shop, крафты).</td></tr>
-          <tr><td>Crates</td><td>Crates (1.15 jar в пакете)</td><td>Кейсы в лобби (лавовый/престиж), ключи с маркерами, анимация, призы из results-файлов.</td></tr>
+          <tr><td>Crates</td><td>Crates 1.15 (jar)</td><td>6 кейсов в лобби (лавовый, престиж, астральный, реликвий, элитный, магмовый), ключи с маркерами, CS:GO-анимация, призы из results-файлов, голограммы DecentHolograms над кейсами.</td></tr>
+          <tr><td>AuraPlugin</td><td>v1.0.0 (custom)</td><td>Экипируемые ауры: GUI <code>/aura</code> (слот 13), 7 аур с пассивными баффами и частицами, сохранение по UUID в <code>data.yml</code>, выдача <code>/aura give &lt;игрок&gt; &lt;тип&gt;</code>.</td></tr>
+          <tr><td>CleanseScrollPlugin</td><td>v1.0.0 (custom)</td><td>«Божья Аура» (Свиток Очищения): снятие негативных эффектов, ABSORPTION II на 15с, КД 40с, <code>/cleansescroll give</code>.</td></tr>
+          <tr><td>RevealDustPlugin</td><td>v1.0.0 (custom)</td><td>«Явная пыль»: раскрывает невидимых игроков в радиусе 15 (снимает INVISIBILITY, даёт GLOWING 10с), КД 25с, <code>/reveal give</code>.</td></tr>
+          <tr><td>DisorientPlugin</td><td>v1.0.0 (custom)</td><td>«Дезориентация»: CONFUSION + BLINDNESS на 4с и разворот камеры на 180° по врагам в радиусе 7, КД 30с, <code>/disorient give</code>.</td></tr>
+          <tr><td>TrapPlugin</td><td>v1.0.0 (custom)</td><td>«Трапка»: полая клетка 5x5x4 из обсидиана/чёрного стекла на 15с, защита блоков, блокировка эндер-перлов/хоруса, КД 60с, <code>/trap give</code>.</td></tr>
+          <tr><td>RunePlugin</td><td>v1.0.0 (custom)</td><td>Система рун (Бульдозер / Плавки / Последнего Шанса): GUI <code>/rune</code>, 1 руна на предмет, PDC + лор, <code>/rune give</code>.</td></tr>
+          <tr><td>SmugglerPlugin</td><td>v1.0.0 (custom, Vault)</td><td>Ивент «Блуждающий Контрабандист»: NPC раз в 2ч, чёрный рынок (скупка x2 / лимитированные товары), <code>/smuggler spawn|despawn|reload</code>.</td></tr>
           <tr><td>LuckPerms</td><td>v5.5.71 (H2)</td><td>Группы/наследование/веса/префиксы/пермишены/мета, бусты Jobs, слоты AH, лимиты приватов; <code>lp sync</code>.</td></tr>
           <tr><td>EssentialsX</td><td>v2.19.7</td><td>Базовые команды, дома, киты, кулдауны, чат-пермишены и утилиты (/heal,/feed,/repair,/fly и т.д.).</td></tr>
           <tr><td>TAB</td><td>v5.3.2</td><td>Сортировка/отображение групп, primary-group-finding-list, placeholder replacements, префиксы из LuckPerms.</td></tr>
@@ -167,7 +175,7 @@ world-settings.lobby:
           <tr><td>PrimeSeller</td><td>установлен</td><td>Скупщик/продажа (конфиги присутствуют); per-group множители не подтверждены.</td></tr>
           <tr><td>Vault</td><td>—</td><td>Экономика/интеграции (используется SigmaGrifBuyer и др.).</td></tr>
           <tr><td>Citizens</td><td>—</td><td>NPC (покупатель шахты). В логах: trait protected у NPC 0 не загружается (pre-existing).</td></tr>
-          <tr><td>DecentHolograms</td><td>—</td><td>Голограммы (загружено 2; в т.ч. надпись/подсказки в лобби, голограммы кейсов по конфигам).</td></tr>
+          <tr><td>DecentHolograms</td><td>2.10.2</td><td>Голограммы: автошахта, скупщик, 4 новые голограммы над кейсами (астральный/реликвий/элитный/магмовый). Всего при старте загружается 7 голограмм.</td></tr>
           <tr><td>WorldGuard, WorldEdit, Chatty, dtlTraders и др.</td><td>установлены (по логам/конфигам)</td><td>Регионы/защита, чат, торговцы и прочие подсистемы.</td></tr>
         </table></div>
         <p class="small muted">Список отражает ключевые плагины, выявленные из локальных конфигов, исходников и логов старта; полный перечень на live может быть шире.</p>
@@ -373,9 +381,15 @@ world-settings.lobby:
         <div class="card">
           <h3>Кейсы (Crates, лобби)</h3>
           <ul>
-            <li><b>Лавовый кейс:</b> <code>lobby -31, 68, 125</code>, блок ORANGE_SHULKER_BOX, ключ TRIPWIRE_HOOK «Ключ от кейса» (marker 1), призы <code>results.yml</code>, тема lava.</li>
-            <li><b>Престиж кейс:</b> <code>lobby -31, 68, 127</code>, блок RED_SHULKER_BOX, ключ NETHER_STAR «Престиж-ключ» (marker 2), призы <code>results-premium.yml</code>, тема prestige.</li>
+            <li><b>Лавовый кейс:</b> <code>lobby -31, 68, 125</code>, ORANGE_SHULKER_BOX, ключ TRIPWIRE_HOOK «Ключ от кейса» (marker 1), призы <code>results.yml</code>, тема lava.</li>
+            <li><b>Престиж кейс:</b> <code>lobby -31, 68, 127</code>, RED_SHULKER_BOX, ключ NETHER_STAR «Престиж-ключ» (marker 2), призы <code>results-premium.yml</code>, тема prestige.</li>
+            <li><b>Астральный кейс [Ауры]:</b> <code>lobby -76, 93, -346</code>, LIGHT_GRAY_SHULKER_BOX, ключ AMETHYST_SHARD (marker 3), призы <code>results-astral.yml</code> — 7 аур AuraPlugin.</li>
+            <li><b>Кейс Реликвий [Талики]:</b> <code>lobby -72, 93, -346</code> (перенесён с -73), WHITE_SHULKER_BOX, ключ NAUTILUS_SHELL (marker 4), призы <code>results-relic.yml</code> — талисманы BetterTalismans.</li>
+            <li><b>Элитный кейс [Донат-привилегии]:</b> <code>lobby -68, 93, -346</code>, PURPLE_SHULKER_BOX, ключ ENCHANTED_GOLDEN_APPLE (marker 5), призы <code>results-elite.yml</code> — ранги SigmaMini…SigmaApex.</li>
+            <li><b>Магмовый кейс [Монеты/Диаманты/Алмазы/Незерит]:</b> <code>lobby -64, 93, -346</code>, ORANGE_SHULKER_BOX, ключ MAGMA_CREAM (marker 6), призы <code>results-magma.yml</code>.</li>
+            <li>Над 4 новыми кейсами — голограммы DecentHolograms: <code>crate_astral.yml</code>, <code>crate_relic.yml</code>, <code>crate_elite.yml</code>, <code>crate_magma.yml</code> (y ≈ 95.3).</li>
             <li>Анимация включена (24 шага, замедление 1→4 тика). Анонсы в чат отключены. Защита зоны кейсов — <code>protected-zones.donate</code> в SigmaGrifClaims.</li>
+            <li><b>Выдача ключей:</b> <code>/givekey &lt;ник&gt; [кол-во] [кейс]</code> (ID: <code>lava, prestige, astral, relic, elite, magma</code>) и <code>/givepkey &lt;ник&gt; [кол-во]</code> для престижа.</li>
           </ul>
         </div>
         <div class="card">
@@ -394,6 +408,75 @@ world-settings.lobby:
             <li>config: <code>fuse-ticks: 80</code> (4с, совместимость с пушками), <code>save-interval-seconds: 300</code>.</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section id="consumables">
+      <h2>Расходники, руны и Контрабандист</h2>
+      <p class="small muted">Все предметы используют <code>PersistentDataContainer</code> (PDC) для идентификации, имеют кастомное имя/лор и скрытое зачарование (<code>ItemFlag.HIDE_ENCHANTS</code>). Кулдауны показываются в ActionBar при повторном клике.</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Божья Аура (Свиток Очищения)</h3>
+          <ul>
+            <li><b>Материал:</b> PAPER. <b>Команда:</b> <code>/cleansescroll give &lt;игрок&gt; &lt;кол-во&gt;</code> (perm <code>cleansescroll.give</code>).</li>
+            <li><b>ПКМ:</b> частицы <code>Particle.TOTEM</code>, звук тотема/исцеления.</li>
+            <li>Снимает: POISON, WITHER, SLOW, SLOW_DIGGING, WEAKNESS, BLINDNESS, CONFUSION, HUNGER, LEVITATION.</li>
+            <li>Даёт ABSORPTION ур.0 (2 золотых сердца) на 15с. Расход 1 шт, КД 40с.</li>
+            <li>config: <code>cooldown-seconds: 40</code>, <code>absorption-seconds: 15</code>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Явная пыль</h3>
+          <ul>
+            <li><b>Материал:</b> GLOWSTONE_DUST. <b>Команда:</b> <code>/reveal give &lt;игрок&gt; &lt;кол-во&gt;</code> (perm <code>revealdust.give</code>).</li>
+            <li><b>ПКМ:</b> волна <code>END_ROD</code>/<code>VILLAGER_HAPPY</code> + звук <code>BLOCK_BELL_USE</code>.</li>
+            <li>Невидимые игроки в радиусе 15 (кроме владельца) теряют INVISIBILITY и получают GLOWING на 10с.</li>
+            <li>В чат — сколько раскрыто (или «рядом никого»). Расход 1 шт, КД 25с.</li>
+            <li>config: <code>radius: 15</code>, <code>glow-seconds: 10</code>, <code>cooldown-seconds: 25</code>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Дезориентация</h3>
+          <ul>
+            <li><b>Материал:</b> BLAZE_POWDER. <b>Команда:</b> <code>/disorient give &lt;игрок&gt; &lt;кол-во&gt;</code> (perm <code>disorient.give</code>).</li>
+            <li><b>ПКМ:</b> вспышка <code>FLAME</code> + <code>SMOKE_LARGE</code>, звук взрыва.</li>
+            <li>Враги в радиусе 7: CONFUSION + BLINDNESS на 4с, камера разворачивается на 180° (yaw +180, pitch сохраняется).</li>
+            <li>Расход 1 шт, КД 30с. config: <code>radius</code>, <code>effect-seconds</code>, <code>cooldown-seconds</code>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Трапка (карманная клетка)</h3>
+          <ul>
+            <li><b>Материал:</b> NETHER_STAR или OBSIDIAN (config <code>item-material</code>). <b>Команда:</b> <code>/trap give &lt;игрок&gt; &lt;кол-во&gt;</code> (perm <code>trap.give</code>).</li>
+            <li><b>ПКМ:</b> полая коробка 5x5x4 (стены/пол/потолок) из обсидиана или чёрного стекла.</li>
+            <li>Заменяет только воздух/воду/траву/снег; твёрдые блоки, сундуки, спавнеры не трогает.</li>
+            <li>Блоки трапки нельзя сломать; авто-удаление через 15с. Блокируются телепорты эндер-перлом и плодом хоруса.</li>
+            <li>Расход 1 шт, КД 60с. При <code>onDisable</code> все активные трапки принудительно удаляются.</li>
+            <li>config: <code>trap-material</code>, <code>cooldown-seconds: 60</code>, <code>duration-seconds: 15</code>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Руны (RunePlugin)</h3>
+        <p class="small">Наложение — через <code>/rune</code> (GUI 27 слотов: слева предмет, справа руна, по центру «Объединить»). На один предмет — только 1 руна; в лор добавляется строка <code>&amp;6✦ Руна …</code>, в PDC — тег. Выдача: <code>/rune give &lt;игрок&gt; &lt;bulldozer|smelting|last_chance&gt; [кол-во]</code> (perm <code>rune.give</code>), открытие GUI — <code>rune.use</code>.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Руна</th><th>Тип предмета</th><th>Эффект</th></tr>
+          <tr><td>Руна Бульдозера (<code>bulldozer</code>)</td><td>Кирка</td><td>Ломает область 3x3x1 в плоскости взгляда (учёт Pitch/Yaw). Не ломает бедрок, обсидиан, плачущий обсидиан, спавнеры, сундуки. Учитывает прочность, Unbreaking, Silk Touch/Fortune.</td></tr>
+          <tr><td>Руна Плавки (<code>smelting</code>)</td><td>Кирка</td><td>Железная/золотая/незер-золотая руда сразу выпадает слитками (IRON_INGOT/GOLD_INGOT), с бонусом Fortune и опытом.</td></tr>
+          <tr><td>Руна Последнего Шанса (<code>last_chance</code>)</td><td>Нагрудник</td><td>При смертельном уроне отменяет его, ставит HP = 2.0, безопасно отталкивает врагов в радиусе 5 (без урона владельцу и разрушения блоков), затем руна сгорает со звуком разбития.</td></tr>
+        </table></div>
+      </div>
+
+      <div class="card">
+        <h3>Блуждающий Контрабандист (SmugglerPlugin)</h3>
+        <ul>
+          <li><b>Спавн:</b> раз в <code>120 мин</code> (config) в мире <code>world</code>, случайная безопасная точка в радиусе <code>500–2000</code> от спавна (верхний твёрдый блок, не вода/лава).</li>
+          <li><b>NPC:</b> WanderingTrader с отключённым AI, бессмертный, имя «&amp;6&amp;lКонтрабандист». Вокруг — частицы <code>SPELL_WITCH</code>/<code>END_ROD</code> каждые 5 тиков.</li>
+          <li><b>Объявление</b> в чат с координатами X/Y/Z и таймером 15 минут; по истечении — исчезновение со вспышкой портала и сообщением.</li>
+          <li><b>GUI «Чёрный рынок» (27 слотов):</b> скупка (слоты 10–12: порох, обсидиан, незеритовый лом) и лимитированные товары (14–16: ключи кейсов, золотые яблоки) со стоком на один спавн. Цены/лимиты/команды выдачи — в <code>config.yml</code>, экономика через Vault.</li>
+          <li><b>Админ:</b> <code>/smuggler spawn</code>, <code>/smuggler despawn</code>, <code>/smuggler reload</code> (perm <code>smuggler.admin</code>).</li>
+        </ul>
       </div>
     </section>
 
@@ -438,13 +521,20 @@ world-settings.lobby:
           <tr><td><code>...\SigmaGrif_Buyer_plugin\</code></td><td>Исходники SigmaGrifBuyer (v1.0)</td></tr>
           <tr><td><code>...\SigmaGrif_TNT_plugin\</code></td><td>Исходники/конфиг/jar SigmaGrifTNT (v1.2)</td></tr>
           <tr><td><code>...\SigmaGrif_Menu_plugin\</code></td><td>Исходники/конфиг/jar SigmaGrifMenu (v1.2)</td></tr>
-          <tr><td><code>...\SigmaGrif_Crates_plugin\</code></td><td>Конфиги/ресурсы кейсов (Crates)</td></tr>
+          <tr><td><code>...\SigmaGrif_Crates_plugin\</code></td><td>Конфиги/ресурсы кейсов (Crates): 6 кейсов, <code>results-astral/relic/elite/magma.yml</code></td></tr>
+          <tr><td><code>...\AuraPlugin\</code></td><td>Исходники/jar AuraPlugin v1.0.0 (7 аур, GUI /aura, data.yml)</td></tr>
+          <tr><td><code>...\CleanseScrollPlugin\</code></td><td>Исходники/jar CleanseScrollPlugin v1.0.0 (Божья Аура)</td></tr>
+          <tr><td><code>...\RevealDustPlugin\</code></td><td>Исходники/jar RevealDustPlugin v1.0.0 (Явная пыль)</td></tr>
+          <tr><td><code>...\DisorientPlugin\</code></td><td>Исходники/jar DisorientPlugin v1.0.0 (Дезориентация)</td></tr>
+          <tr><td><code>...\TrapPlugin\</code></td><td>Исходники/jar TrapPlugin v1.0.0 (Трапка)</td></tr>
+          <tr><td><code>...\RunePlugin\</code></td><td>Исходники/jar RunePlugin v1.0.0 (3 руны, GUI /rune)</td></tr>
+          <tr><td><code>...\SmugglerPlugin\</code></td><td>Исходники/jar SmugglerPlugin v1.0.0 (Контрабандист, Vault)</td></tr>
           <tr><td><code>...\SigmaGrif_lobby.md</code></td><td>Документация по лобби/спавну/RTP/меню</td></tr>
           <tr><td><code>...\SigmaGrif_transfer\mcsh_token.txt</code></td><td>Рабочий MCSH bearer-токен (секрет, не публиковать)</td></tr>
           <tr><td><code>%TEMP%\opencode\ranks_live\merged\</code></td><td>Слитые Essentials/TAB/Jobs конфиги (загружались на сервер)</td></tr>
           <tr><td><code>%TEMP%\opencode\ranks_tune\</code></td><td>Live/патченные конфиги (BetterRTP, SigmaGrifClaims и др.)</td></tr>
         </table></div>
-        <p class="small muted">Сгенерировано на основе локальных файлов, конфигов и сводки по серверу SigmaGrif (430986da-53ef-42c1-91ff-07658f7272e5). Дата подготовки данных: 2026-11-19.</p>
+        <p class="small muted">Сгенерировано на основе локальных файлов, конфигов и сводки по серверу SigmaGrif (430986da-53ef-42c1-91ff-07658f7272e5). Дата подготовки данных: 2026-11-21.</p>
       </div>
     </section>
   </main>
