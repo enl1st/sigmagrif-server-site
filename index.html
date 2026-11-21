@@ -414,6 +414,23 @@ world-settings.lobby:
     <section id="consumables">
       <h2>Расходники, руны и Контрабандист</h2>
       <p class="small muted">Все предметы используют <code>PersistentDataContainer</code> (PDC) для идентификации, имеют кастомное имя/лор и скрытое зачарование (<code>ItemFlag.HIDE_ENCHANTS</code>). Кулдауны показываются в ActionBar при повторном клике.</p>
+
+      <div class="card">
+        <h3>Ауры (AuraPlugin v1.0.0) — все 7 аур</h3>
+        <p class="small">Экипировка: <code>/aura</code> — GUI «Слот Ауры» на 27 слотов, слот <b>13</b> (в остальные нельзя ничего положить). В слот принимается только предмет с PDC-тегом ауры. Надетая аура сохраняется по UUID в <code>plugins/AuraPlugin/data.yml</code> и восстанавливается при входе/респавне. При смерти без <code>keepInventory</code> аура снимается и выпадает; при <code>keepInventory</code> — остаётся. Выдача: <code>/aura give &lt;игрок&gt; &lt;тип&gt;</code> (perm <code>auraplugin.admin</code>), открытие меню — <code>auraplugin.use</code> (по умолчанию у всех). Визуал: кольцо/спираль частиц каждые 3 тика на уровне ног.</p>
+        <div class="table-wrap"><table>
+          <tr><th>Аура (ID)</th><th>Предмет</th><th>Частицы</th><th>Пассивные способности</th></tr>
+          <tr><td><b>Аура Берсерка</b> (<code>berserk</code>)</td><td>FIRE_CHARGE</td><td>REDSTONE (красная пыль)</td><td><b>Сила I</b>; <b>скорость атаки +10%</b> (атрибут <code>GENERIC_ATTACK_SPEED</code>).</td></tr>
+          <tr><td><b>Аура Титана</b> (<code>titan</code>)</td><td>MAGMA_CREAM</td><td>FLAME</td><td><b>+4 брони</b>, <b>+2 твёрдости брони</b>, <b>+0.3 сопротивления отбрасыванию</b>.</td></tr>
+          <tr><td><b>Аура Ветра</b> (<code>wind</code>)</td><td>HEART_OF_THE_SEA</td><td>CLOUD</td><td><b>Скорость I</b>, <b>Прыгучесть I</b>, <b>полный иммунитет к урону от падения</b>.</td></tr>
+          <tr><td><b>Аура Вампира</b> (<code>vampire</code>)</td><td>NETHER_STAR</td><td>DAMAGE_INDICATOR</td><td><b>Вампиризм:</b> 15% финального урона ближнего боя возвращается здоровьем (не выше максимума).</td></tr>
+          <tr><td><b>Аура Феникса</b> (<code>phoenix</code>)</td><td>PRISMARINE_CRYSTALS</td><td>SOUL_FIRE_FLAME</td><td><b>Огнестойкость</b>, мгновенное <b>тушение огня</b>, <b>Регенерация II</b> при здоровье ниже 30%.</td></tr>
+          <tr><td><b>Аура Шахтёра</b> (<code>miner</code>)</td><td>EMERALD</td><td>VILLAGER_HAPPY</td><td><b>Спешка II</b>, <b>Ночное зрение</b>, <b>магнит лута</b> (притягивает дроп в радиусе 4 блоков).</td></tr>
+          <tr><td><b>Аура Тени</b> (<code>shadow</code>)</td><td>ENDER_EYE</td><td>PORTAL</td><td><b>Агро мобов −50%</b> (радиус follow-range); <b>невидимость после 2 сек. приседания</b> — спадает при ударе, получении урона или выходе из приседа.</td></tr>
+        </table></div>
+        <p class="small muted">Эффекты и атрибут-модификаторы корректно снимаются при снятии ауры, смерти, выходе игрока и выключении плагина; при входе/респавне — восстанавливаются.</p>
+      </div>
+
       <div class="grid cols-2">
         <div class="card">
           <h3>Божья Аура (Свиток Очищения)</h3>
