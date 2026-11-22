@@ -165,7 +165,7 @@ world-settings.lobby:
           <tr><td>RevealDustPlugin</td><td>v1.0.0 (custom)</td><td>«Явная пыль»: раскрывает невидимых игроков в радиусе 15 (снимает INVISIBILITY, даёт GLOWING 10с), КД 25с, <code>/reveal give</code>.</td></tr>
           <tr><td>DisorientPlugin</td><td>v1.0.0 (custom)</td><td>«Дезориентация»: CONFUSION + BLINDNESS на 4с и разворот камеры на 180° по врагам в радиусе 7, КД 30с, <code>/disorient give</code>.</td></tr>
           <tr><td>TrapPlugin</td><td>v1.0.0 (custom)</td><td>«Трапка»: полая клетка 5x5x4 из обсидиана/чёрного стекла на 15с, защита блоков, блокировка эндер-перлов/хоруса, КД 60с, <code>/trap give</code>.</td></tr>
-          <tr><td>RunePlugin</td><td>v1.0.0 (custom)</td><td>Система рун (Бульдозер / Плавки / Последнего Шанса): GUI <code>/rune</code>, 1 руна на предмет, PDC + лор, <code>/rune give</code>.</td></tr>
+          <tr><td>SigmaEnchants</td><td>v1.0.0 (custom)</td><td>Кастомные зачарования: выпадают в столе зачарований, хранятся в PDC+лоре, применяются через <code>/enchanter</code> или наковальню-книги; включает перенесённые руны (Бульдозер, Плавка, Последний Шанс).</td></tr>
           <tr><td>SmugglerPlugin</td><td>v1.0.0 (custom, Vault)</td><td>Ивент «Блуждающий Контрабандист»: NPC раз в 2ч, чёрный рынок (скупка x2 / лимитированные товары), <code>/smuggler spawn|despawn|reload</code>.</td></tr>
           <tr><td>LuckPerms</td><td>v5.5.71 (H2)</td><td>Группы/наследование/веса/префиксы/пермишены/мета, бусты Jobs, слоты AH, лимиты приватов; <code>lp sync</code>.</td></tr>
           <tr><td>EssentialsX</td><td>v2.19.7</td><td>Базовые команды, дома, киты, кулдауны, чат-пермишены и утилиты (/heal,/feed,/repair,/fly и т.д.).</td></tr>
@@ -599,14 +599,30 @@ world-settings.lobby:
       </div>
 
       <div class="card">
-        <h3>Руны (RunePlugin)</h3>
-        <p class="small">Наложение — через <code>/rune</code> (GUI 27 слотов: слева предмет, справа руна, по центру «Объединить»). На один предмет — только 1 руна; в лор добавляется строка <code>&amp;6✦ Руна …</code>, в PDC — тег. Выдача: <code>/rune give &lt;игрок&gt; &lt;bulldozer|smelting|last_chance&gt; [кол-во]</code> (perm <code>rune.give</code>), открытие GUI — <code>rune.use</code>.</p>
+        <h3>Кастомные зачарования (SigmaEnchants v1.0.0)</h3>
+        <p class="small">Выбиваются в <b>столе зачарований</b> (шанс зависит от уровня затрат и настроек в <code>plugins/SigmaEnchants/config.yml</code>). Хранятся в PDC + лоре (<code>✦ Название I</code>). Применение книг — через <code>/enchanter</code> (GUI чародея, стоит уровни опыта, по умолчанию 5). Админ: <code>/cenchant give &lt;игрок&gt; &lt;чар&gt; &lt;уровень&gt;</code>, <code>/cenchant list</code>, <code>/cenchant reload</code> (perm <code>sigmaenchants.admin</code>).</p>
         <div class="table-wrap"><table>
-          <tr><th>Руна</th><th>Тип предмета</th><th>Эффект</th></tr>
-          <tr><td>Руна Бульдозера (<code>bulldozer</code>)</td><td>Кирка</td><td>Ломает область 3x3x1 в плоскости взгляда (учёт Pitch/Yaw). Не ломает бедрок, обсидиан, плачущий обсидиан, спавнеры, сундуки. Учитывает прочность, Unbreaking, Silk Touch/Fortune.</td></tr>
-          <tr><td>Руна Плавки (<code>smelting</code>)</td><td>Кирка</td><td>Железная/золотая/незер-золотая руда сразу выпадает слитками (IRON_INGOT/GOLD_INGOT), с бонусом Fortune и опытом.</td></tr>
-          <tr><td>Руна Последнего Шанса (<code>last_chance</code>)</td><td>Нагрудник</td><td>При смертельном уроне отменяет его, ставит HP = 2.0, безопасно отталкивает врагов в радиусе 5 (без урона владельцу и разрушения блоков), затем руна сгорает со звуком разбития.</td></tr>
+          <tr><th>Чар (ID)</th><th>Тип</th><th>Ур.</th><th>Эффект</th></tr>
+          <tr><td>Вампиризм (<code>vampirism</code>)</td><td>Меч</td><td>I–III</td><td>15%/25%/35% шанс восстановить 1–2 сердца при ударе.</td></tr>
+          <tr><td>Ядовитый клинок (<code>poison_blade</code>)</td><td>Меч</td><td>I–II</td><td>20% шанс наложить Отравление I на 3–4 сек.</td></tr>
+          <tr><td>Громовержец (<code>thunderer</code>)</td><td>Меч</td><td>I–II</td><td>При крите 10%/15% удар молнией: +2–3 чистого урона (без поджога лута).</td></tr>
+          <tr><td>Обезглавливание (<code>beheading</code>)</td><td>Меч/Топор</td><td>I–III</td><td>10%/20%/30% шанс головы моба/игрока при убийстве.</td></tr>
+          <tr><td>Палач (<code>executioner</code>)</td><td>Меч</td><td>I–II</td><td>+15%/+25% урона по целям с HP &lt; 30%.</td></tr>
+          <tr><td>Пружины (<code>springs</code>)</td><td>Ботинки</td><td>I–III</td><td>Прыгучесть I–II, урон от падения −50% (III — полный иммунитет).</td></tr>
+          <tr><td>Лавоход (<code>lava_walker</code>)</td><td>Ботинки</td><td>I</td><td>Превращает лаву под ногами в магму на ~5 сек.</td></tr>
+          <tr><td>Закалка (<code>anti_crit</code>)</td><td>Нагрудник</td><td>I–II</td><td>15%/25% шанс заблокировать крит (превратить в обычный удар).</td></tr>
+          <tr><td>Токсичный щит (<code>toxic_shield</code>)</td><td>Поножи</td><td>I–II</td><td>При ударе в ближнем бою 15% шанс наложить Иссушение I на 3 сек. на атакующего.</td></tr>
+          <tr><td>Ненасытность (<code>insatiable</code>)</td><td>Шлем</td><td>I</td><td>Медленно восстанавливает сытость.</td></tr>
+          <tr><td>Магнетизм (<code>magnetism</code>)</td><td>Инструмент</td><td>I</td><td>Добытые блоки/дроп сразу в инвентарь.</td></tr>
+          <tr><td>Опытный шахтёр (<code>experienced_miner</code>)</td><td>Кирка</td><td>I–III</td><td>Опыт из руд ×1.5 / ×2 / ×2.5.</td></tr>
+          <tr><td>Взрывная стрела (<code>explosive_arrow</code>)</td><td>Лук/Арбалет</td><td>I–II</td><td>Небольшой взрыв при попадании (без разрушения блоков), урон и отбрасывание по площади.</td></tr>
+          <tr><td>Снайпер (<code>sniper</code>)</td><td>Лук/Арбалет</td><td>I–II</td><td>До +20%/+40% урона на дистанции 30+ блоков.</td></tr>
+          <tr><td>Крюк (<code>hook</code>)</td><td>Лук/Арбалет</td><td>I</td><td>Притягивает цель к стрелку при попадании.</td></tr>
+          <tr><td>Бульдозер (<code>bulldozer</code>)</td><td>Кирка</td><td>I</td><td>Ломает 3x3x1; не ломает бедрок/обсидиан/плачущий обсидиан/спавнеры/сундуки; учёт прочности/Unbreaking/Silk/Fortune. (бывшая руна)</td></tr>
+          <tr><td>Плавка (<code>smelting</code>)</td><td>Кирка</td><td>I</td><td>Автоплавка железной/золотой/незер-золотой руды в слитки с Fortune+XP. (бывшая руна)</td></tr>
+          <tr><td>Последний Шанс (<code>last_chance</code>)</td><td>Нагрудник</td><td>I</td><td>Спасает от смертельного урона: HP=2.0, отталкивание врагов в 5 блоках, чар сгорает. (бывшая руна)</td></tr>
         </table></div>
+        <p class="small muted">Примечание: в UI стола зачарований 1.16.5 кастомные чары не отображаются в 3 ванильных предложениях — они добавляются при фактическом зачаровании (сообщение в чат + лор). RunePlugin удалён; руны перенесены в SigmaEnchants.</p>
       </div>
 
       <div class="card">
@@ -668,7 +684,7 @@ world-settings.lobby:
           <tr><td><code>...\RevealDustPlugin\</code></td><td>Исходники/jar RevealDustPlugin v1.0.0 (Явная пыль)</td></tr>
           <tr><td><code>...\DisorientPlugin\</code></td><td>Исходники/jar DisorientPlugin v1.0.0 (Дезориентация)</td></tr>
           <tr><td><code>...\TrapPlugin\</code></td><td>Исходники/jar TrapPlugin v1.0.0 (Трапка)</td></tr>
-          <tr><td><code>...\RunePlugin\</code></td><td>Исходники/jar RunePlugin v1.0.0 (3 руны, GUI /rune)</td></tr>
+          <tr><td><code>...\SigmaEnchants\</code></td><td>Исходники/jar SigmaEnchants v1.0.0 (20 кастомных чар, стол зачарований, /enchanter, /cenchant)</td></tr>
           <tr><td><code>...\SmugglerPlugin\</code></td><td>Исходники/jar SmugglerPlugin v1.0.0 (Контрабандист, Vault)</td></tr>
           <tr><td><code>...\SigmaGrif_lobby.md</code></td><td>Документация по лобби/спавну/RTP/меню</td></tr>
           <tr><td><code>...\SigmaGrif_transfer\mcsh_token.txt</code></td><td>Рабочий MCSH bearer-токен (секрет, не публиковать)</td></tr>
