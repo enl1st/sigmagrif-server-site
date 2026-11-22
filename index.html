@@ -69,6 +69,7 @@
     <a href="#claims">Приваты и /fly</a>
     <a href="#rtp">RTP и перемещение</a>
     <a href="#npc">NPC, кейсы, меню, шахта, TNT</a>
+    <a href="#crates">Кейсы и ключи (подробно)</a>
     <a href="#consumables">Расходники, руны, контрабандист</a>
     <a href="#caveats">Ограничения и caveats</a>
     <a href="#files">Файлы и артефакты</a>
@@ -390,6 +391,7 @@ world-settings.lobby:
             <li>Над 4 новыми кейсами — голограммы DecentHolograms: <code>crate_astral.yml</code>, <code>crate_relic.yml</code>, <code>crate_elite.yml</code>, <code>crate_magma.yml</code> (y ≈ 95.3).</li>
             <li>Анимация включена (24 шага, замедление 1→4 тика). Анонсы в чат отключены. Защита зоны кейсов — <code>protected-zones.donate</code> в SigmaGrifClaims.</li>
             <li><b>Выдача ключей:</b> <code>/givekey &lt;ник&gt; [кол-во] [кейс]</code> (ID: <code>lava, prestige, astral, relic, elite, magma</code>) и <code>/givepkey &lt;ник&gt; [кол-во]</code> для престижа.</li>
+            <li>Полные списки призов с шансами — в разделе <a href="#crates">«Кейсы и ключи (подробно)»</a>.</li>
           </ul>
         </div>
         <div class="card">
@@ -407,6 +409,128 @@ world-settings.lobby:
             <li>Команда: <code>/customtnt give &lt;игрок&gt; &lt;тип&gt; &lt;количество&gt;</code> (perm <code>customtnt.admin</code>, op).</li>
             <li>config: <code>fuse-ticks: 80</code> (4с, совместимость с пушками), <code>save-interval-seconds: 300</code>.</li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="crates">
+      <h2>Кейсы и ключи (подробно)</h2>
+      <div class="card">
+        <h3>Команда выдачи ключей</h3>
+        <pre>/givekey &lt;ник&gt; [кол-во] [кейс]   — выдать ключ кейса (по умолчанию lava)
+/givepkey &lt;ник&gt; [кол-во]          — выдать ключ Престиж-кейса
+/crates crates                     — список кейсов в игре
+/crates test &lt;кейс&gt;               — предпросмотр анимации (ключ не тратится)</pre>
+        <ul>
+          <li><b>Право:</b> <code>crates.givekey</code> (по умолчанию <b>op</b>).</li>
+          <li><b>ID кейсов:</b> <code>lava</code>, <code>prestige</code>, <code>astral</code>, <code>relic</code>, <code>elite</code>, <code>magma</code>.</li>
+          <li><b>Примеры:</b> <code>/givekey Enliste123 1 astral</code>, <code>/givekey Enliste123 3 magma</code>, <code>/givepkey Enliste123 1</code>.</li>
+          <li>Ключи защищены скрытой меткой (marker 1–6) и зачарованием — подделать/размножить нельзя; в логах при старте: <code>protected=yes</code>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Расположение кейсов (мир <code>lobby</code>)</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Кейс</th><th>Координаты</th><th>Блок</th><th>Ключ (marker)</th><th>Файл призов</th><th>Тема</th></tr>
+          <tr><td>Лавовый</td><td><code>-31, 68, 125</code></td><td>ORANGE_SHULKER_BOX</td><td>TRIPWIRE_HOOK «Ключ от кейса» (1)</td><td><code>results.yml</code></td><td>lava</td></tr>
+          <tr><td>Престиж</td><td><code>-31, 68, 127</code></td><td>RED_SHULKER_BOX</td><td>NETHER_STAR «Престиж-ключ» (2)</td><td><code>results-premium.yml</code></td><td>prestige</td></tr>
+          <tr><td>Астральный [Ауры]</td><td><code>-76, 93, -346</code></td><td>LIGHT_GRAY_SHULKER_BOX</td><td>AMETHYST_SHARD «Астральный ключ» (3)</td><td><code>results-astral.yml</code></td><td>prestige</td></tr>
+          <tr><td>Реликвий [Талики]</td><td><code>-72, 93, -346</code></td><td>WHITE_SHULKER_BOX</td><td>NAUTILUS_SHELL «Ключ Реликвий» (4)</td><td><code>results-relic.yml</code></td><td>prestige</td></tr>
+          <tr><td>Элитный [Донат]</td><td><code>-68, 93, -346</code></td><td>PURPLE_SHULKER_BOX</td><td>ENCHANTED_GOLDEN_APPLE «Элитный ключ» (5)</td><td><code>results-elite.yml</code></td><td>prestige</td></tr>
+          <tr><td>Магмовый [Ресурсы]</td><td><code>-64, 93, -346</code></td><td>ORANGE_SHULKER_BOX</td><td>MAGMA_CREAM «Магмовый ключ» (6)</td><td><code>results-magma.yml</code></td><td>lava</td></tr>
+        </table></div>
+        <p class="small muted">Анимация: CS:GO-лента, 24 шага, замедление 1→4 тика. Над 4 новыми кейсами — голограммы DecentHolograms (<code>crate_astral/relic/elite/magma.yml</code>).</p>
+      </div>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Лавовый кейс — призы</h3>
+          <div class="table-wrap"><table>
+            <tr><th>Приз</th><th>Шанс</th></tr>
+            <tr><td>Алмаз ×1</td><td>20%</td></tr>
+            <tr><td>Алмазы ×9</td><td>10%</td></tr>
+            <tr><td>Золотые яблоки ×2</td><td>10%</td></tr>
+            <tr><td>Монеты 1 500</td><td>25%</td></tr>
+            <tr><td>★ Джекпот: 10 000 монет</td><td>5%</td></tr>
+            <tr><td>Диаманты 25</td><td>25%</td></tr>
+            <tr><td>★ Джекпот: Диаманты 75</td><td>5%</td></tr>
+          </table></div>
+        </div>
+        <div class="card">
+          <h3>Престиж кейс — призы</h3>
+          <div class="table-wrap"><table>
+            <tr><th>Приз</th><th>Шанс</th></tr>
+            <tr><td>VIP</td><td>45%</td></tr>
+            <tr><td>PREMIUM</td><td>25%</td></tr>
+            <tr><td>DELUXE</td><td>15%</td></tr>
+            <tr><td>ELITE</td><td>9%</td></tr>
+            <tr><td>LEGEND</td><td>4%</td></tr>
+            <tr><td>5 000 очков</td><td>2%</td></tr>
+          </table></div>
+          <p class="small warn">Файл <code>results-premium.yml</code> всё ещё выдаёт старые LP-группы vip/premium/deluxe/elite/legend — при необходимости заменить на актуальные Sigma-ранги.</p>
+        </div>
+        <div class="card">
+          <h3>Астральный кейс — призы (ауры)</h3>
+          <div class="table-wrap"><table>
+            <tr><th>Приз</th><th>Шанс</th></tr>
+            <tr><td>Аура Берсерка</td><td>15%</td></tr>
+            <tr><td>Аура Титана</td><td>15%</td></tr>
+            <tr><td>Аура Ветра</td><td>14%</td></tr>
+            <tr><td>Аура Вампира</td><td>14%</td></tr>
+            <tr><td>Аура Феникса</td><td>14%</td></tr>
+            <tr><td>Аура Шахтёра</td><td>14%</td></tr>
+            <tr><td>Аура Тени</td><td>14%</td></tr>
+          </table></div>
+          <p class="small muted">Выдаётся командой <code>aura give &lt;player&gt; &lt;тип&gt;</code> (AuraPlugin).</p>
+        </div>
+        <div class="card">
+          <h3>Кейс Реликвий — призы (талисманы)</h3>
+          <div class="table-wrap"><table>
+            <tr><th>Приз</th><th>Шанс</th></tr>
+            <tr><td>Талисман Убийцы</td><td>20%</td></tr>
+            <tr><td>Талисман Охотника</td><td>18%</td></tr>
+            <tr><td>Талисман Воина</td><td>17%</td></tr>
+            <tr><td>Сфера Магмы</td><td>17%</td></tr>
+            <tr><td>Сфера Иссушителя</td><td>15%</td></tr>
+            <tr><td>Сфера Голема</td><td>13%</td></tr>
+          </table></div>
+          <p class="small muted">Выдаётся через BetterTalismans (<code>bettertalismans give &lt;player&gt; &lt;id&gt;</code>).</p>
+        </div>
+        <div class="card">
+          <h3>Элитный кейс — призы (привилегии)</h3>
+          <div class="table-wrap"><table>
+            <tr><th>Приз</th><th>Шанс</th></tr>
+            <tr><td>SigmaMini</td><td>30%</td></tr>
+            <tr><td>SigmaLite</td><td>22%</td></tr>
+            <tr><td>SigmaCore</td><td>15%</td></tr>
+            <tr><td>SigmaPrime</td><td>12%</td></tr>
+            <tr><td>SigmaPro</td><td>8%</td></tr>
+            <tr><td>SigmaElite</td><td>5%</td></tr>
+            <tr><td>SigmaUltra</td><td>3%</td></tr>
+            <tr><td>SigmaMaster</td><td>2%</td></tr>
+            <tr><td>SigmaLegend</td><td>1%</td></tr>
+            <tr><td>SigmaMythic</td><td>1%</td></tr>
+            <tr><td>SigmaApex</td><td>1%</td></tr>
+          </table></div>
+          <p class="small muted">Выдаётся через LuckPerms (<code>lp user &lt;player&gt; parent add &lt;ранг&gt;</code>); эксклюзивный <code>sigma</code> в кейс не входит.</p>
+        </div>
+        <div class="card">
+          <h3>Магмовый кейс — призы (ресурсы)</h3>
+          <div class="table-wrap"><table>
+            <tr><th>Приз</th><th>Шанс</th></tr>
+            <tr><td>1 000 монет</td><td>20%</td></tr>
+            <tr><td>2 500 монет</td><td>12%</td></tr>
+            <tr><td>5 000 монет</td><td>6%</td></tr>
+            <tr><td>10 000 монет</td><td>2%</td></tr>
+            <tr><td>10 диамантов</td><td>12%</td></tr>
+            <tr><td>25 диамантов</td><td>8%</td></tr>
+            <tr><td>50 диамантов</td><td>4%</td></tr>
+            <tr><td>100 диамантов</td><td>1%</td></tr>
+            <tr><td>Алмаз ×1 / ×3 / ×5 / ×8 / ×10 / ×15</td><td>8% / 6% / 5% / 3% / 2% / 1%</td></tr>
+            <tr><td>Незеритовый слиток ×1 / ×2 / ×3</td><td>6% / 3% / 1%</td></tr>
+          </table></div>
+          <p class="small muted">Монеты — <code>eco give</code>, диаманты — <code>points give</code>, алмазы/незерит — предметами.</p>
         </div>
       </div>
     </section>
