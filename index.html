@@ -71,6 +71,7 @@
     <a href="#npc">NPC, кейсы, меню, шахта, TNT</a>
     <a href="#crates">Кейсы и ключи (подробно)</a>
     <a href="#consumables">Расходники, руны, контрабандист</a>
+    <a href="#enchanting">Кастомные чары и стол зачарований</a>
     <a href="#caveats">Ограничения и caveats</a>
     <a href="#files">Файлы и артефакты</a>
   </nav>
@@ -599,30 +600,8 @@ world-settings.lobby:
       </div>
 
       <div class="card">
-        <h3>Кастомные зачарования (SigmaEnchants v1.0.0)</h3>
-        <p class="small">Выбиваются в <b>столе зачарований</b> (шанс зависит от уровня затрат и настроек в <code>plugins/SigmaEnchants/config.yml</code>). Хранятся в PDC + лоре (<code>✦ Название I</code>). Применение книг — через <code>/enchanter</code> (GUI чародея, стоит уровни опыта, по умолчанию 5). Админ: <code>/cenchant give &lt;игрок&gt; &lt;чар&gt; &lt;уровень&gt;</code>, <code>/cenchant list</code>, <code>/cenchant reload</code> (perm <code>sigmaenchants.admin</code>).</p>
-        <div class="table-wrap"><table>
-          <tr><th>Чар (ID)</th><th>Тип</th><th>Ур.</th><th>Эффект</th></tr>
-          <tr><td>Вампиризм (<code>vampirism</code>)</td><td>Меч</td><td>I–III</td><td>15%/25%/35% шанс восстановить 1–2 сердца при ударе.</td></tr>
-          <tr><td>Ядовитый клинок (<code>poison_blade</code>)</td><td>Меч</td><td>I–II</td><td>20% шанс наложить Отравление I на 3–4 сек.</td></tr>
-          <tr><td>Громовержец (<code>thunderer</code>)</td><td>Меч</td><td>I–II</td><td>При крите 10%/15% удар молнией: +2–3 чистого урона (без поджога лута).</td></tr>
-          <tr><td>Обезглавливание (<code>beheading</code>)</td><td>Меч/Топор</td><td>I–III</td><td>10%/20%/30% шанс головы моба/игрока при убийстве.</td></tr>
-          <tr><td>Палач (<code>executioner</code>)</td><td>Меч</td><td>I–II</td><td>+15%/+25% урона по целям с HP &lt; 30%.</td></tr>
-          <tr><td>Пружины (<code>springs</code>)</td><td>Ботинки</td><td>I–III</td><td>Прыгучесть I–II, урон от падения −50% (III — полный иммунитет).</td></tr>
-          <tr><td>Лавоход (<code>lava_walker</code>)</td><td>Ботинки</td><td>I</td><td>Превращает лаву под ногами в магму на ~5 сек.</td></tr>
-          <tr><td>Закалка (<code>anti_crit</code>)</td><td>Нагрудник</td><td>I–II</td><td>15%/25% шанс заблокировать крит (превратить в обычный удар).</td></tr>
-          <tr><td>Токсичный щит (<code>toxic_shield</code>)</td><td>Поножи</td><td>I–II</td><td>При ударе в ближнем бою 15% шанс наложить Иссушение I на 3 сек. на атакующего.</td></tr>
-          <tr><td>Ненасытность (<code>insatiable</code>)</td><td>Шлем</td><td>I</td><td>Медленно восстанавливает сытость.</td></tr>
-          <tr><td>Магнетизм (<code>magnetism</code>)</td><td>Инструмент</td><td>I</td><td>Добытые блоки/дроп сразу в инвентарь.</td></tr>
-          <tr><td>Опытный шахтёр (<code>experienced_miner</code>)</td><td>Кирка</td><td>I–III</td><td>Опыт из руд ×1.5 / ×2 / ×2.5.</td></tr>
-          <tr><td>Взрывная стрела (<code>explosive_arrow</code>)</td><td>Лук/Арбалет</td><td>I–II</td><td>Небольшой взрыв при попадании (без разрушения блоков), урон и отбрасывание по площади.</td></tr>
-          <tr><td>Снайпер (<code>sniper</code>)</td><td>Лук/Арбалет</td><td>I–II</td><td>До +20%/+40% урона на дистанции 30+ блоков.</td></tr>
-          <tr><td>Крюк (<code>hook</code>)</td><td>Лук/Арбалет</td><td>I</td><td>Притягивает цель к стрелку при попадании.</td></tr>
-          <tr><td>Бульдозер (<code>bulldozer</code>)</td><td>Кирка</td><td>I</td><td>Ломает 3x3x1; не ломает бедрок/обсидиан/плачущий обсидиан/спавнеры/сундуки; учёт прочности/Unbreaking/Silk/Fortune. (бывшая руна)</td></tr>
-          <tr><td>Плавка (<code>smelting</code>)</td><td>Кирка</td><td>I</td><td>Автоплавка железной/золотой/незер-золотой руды в слитки с Fortune+XP. (бывшая руна)</td></tr>
-          <tr><td>Последний Шанс (<code>last_chance</code>)</td><td>Нагрудник</td><td>I</td><td>Спасает от смертельного урона: HP=2.0, отталкивание врагов в 5 блоках, чар сгорает. (бывшая руна)</td></tr>
-        </table></div>
-        <p class="small muted">Примечание: в UI стола зачарований 1.16.5 кастомные чары не отображаются в 3 ванильных предложениях — они добавляются при фактическом зачаровании (сообщение в чат + лор). RunePlugin удалён; руны перенесены в SigmaEnchants.</p>
+        <h3>Кастомные зачарования (SigmaEnchants)</h3>
+        <p>Полная методичка по столу зачарований, шансам, всем 20 чарам, GUI чародея и командам — в отдельном разделе: <a href="#enchanting"><b>Кастомные чары и стол зачарований</b></a>.</p>
       </div>
 
       <div class="card">
@@ -634,6 +613,110 @@ world-settings.lobby:
           <li><b>GUI «Чёрный рынок» (27 слотов):</b> скупка (слоты 10–12: порох, обсидиан, незеритовый лом) и лимитированные товары (14–16: ключи кейсов, золотые яблоки) со стоком на один спавн. Цены/лимиты/команды выдачи — в <code>config.yml</code>, экономика через Vault.</li>
           <li><b>Админ:</b> <code>/smuggler spawn</code>, <code>/smuggler despawn</code>, <code>/smuggler reload</code> (perm <code>smuggler.admin</code>).</li>
         </ul>
+      </div>
+    </section>
+
+    <section id="enchanting">
+      <h2>Кастомные чары и стол зачарований — полная методичка</h2>
+      <p class="small muted">Плагин: <b>SigmaEnchants v1.0.0</b> (Spigot 1.16.5). Кастомные чары выпадают в обычном столе зачарований, хранятся в PDC + лоре (<code>✦ Название I</code>) и работают через обработчики плагина. RunePlugin удалён — руны Бульдозер/Плавка/Последний Шанс перенесены сюда как чары.</p>
+
+      <div class="card">
+        <h3>1) Как выбить кастомный чар в столе зачарований</h3>
+        <ol>
+          <li>Поставь <b>обычный стол зачарований</b> (книжные полки работают как обычно, повышая уровень затрат).</li>
+          <li>Положи подходящий предмет (меч, броня, кирка, лук и т.д.) или книгу.</li>
+          <li>Выбери любое ванильное предложение (1–30 ур. опыта). <b>Важно:</b> в 3 строчках интерфейса кастомный чар не отображается — это ограничение 1.16.5.</li>
+          <li>При нажатии на зачарование плагин делает ролл кастомного чара. Если повезло — чар добавится к предмету, в чат придёт сообщение <code>[Чары] Вы выбили кастомное зачарование: ...</code> и проиграется звук.</li>
+          <li>Кастомный чар виден в лоре предмета строкой вида <code>✦ Вампиризм II</code>.</li>
+        </ol>
+        <div class="note small"><b>Можно ли выбить все 20 чар?</b> Да — все 20 включены в конфиге (<code>table.enabled: true</code>, у каждого есть <code>table-chance</code>, <code>min-exp-level</code>, <code>applies-to</code>). Но выпадение вероятностное, а не гарантированное.</div>
+      </div>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>2) Формула шанса</h3>
+          <ul>
+            <li><b>Шаг A — общий ролл:</b> <code>общийШанс = base-chance + chance-per-exp-level * expCost</code> (ограничен 95%). Если случайное число больше — кастомный чар не выпадает.</li>
+            <li><b>Шаг B — выбор чара:</b> из всех включённых чаров берутся те, что подходят предмету, имеют <code>min-exp-level &lt;= expCost</code>, ещё не стоят на предмете и прошли свой <code>table-chance</code>.</li>
+            <li><b>Шаг C — применение:</b> из подходящих случайно выбирается до <code>max-custom-per-enchant</code> чаров (по умолчанию 1).</li>
+            <li><b>Уровень чара:</b> выше <code>expCost</code> — выше шанс получить высокий уровень (но не выше <code>max-level</code> чара).</li>
+          </ul>
+          <pre>Текущие значения config.yml:
+base-chance: 0.15          (15%)
+chance-per-exp-level: 0.005 (+0.5% за уровень)
+max-custom-per-enchant: 1
+
+Примеры общего шанса:
+expCost 10 -> 15% + 5%  = 20%
+expCost 20 -> 15% + 10% = 25%
+expCost 30 -> 15% + 15% = 30%</pre>
+        </div>
+        <div class="card">
+          <h3>3) GUI Чародея (/enchanter)</h3>
+          <ul>
+            <li><b>Команда:</b> <code>/enchanter</code> (perm <code>sigmaenchants.enchanter</code>, по умолчанию у всех).</li>
+            <li><b>Слоты:</b> слева — предмет, справа — книга с кастомным чаром (PDC), центр — кнопка «Наложить чары».</li>
+            <li><b>Стоимость:</b> уровни опыта игрока (<code>enchanter.apply-cost-levels</code>, по умолчанию <b>5</b>).</li>
+            <li><b>Ограничения:</b> чар должен подходить предмету; тот же чар нельзя наложить повторно; книга расходуется.</li>
+            <li><b>NPC:</b> рекомендуется поставить Citizens-NPC «Чародей» на спавне и привязать команду <code>/enchanter</code> (см. команды ниже).</li>
+          </ul>
+          <pre>Citizens (в игре, стоя на месте NPC):
+/npc create &amp;5&amp;lЧародей
+/npc tphere
+/npc lookclose
+/npc command add --player enchanter</pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>4) Все 20 чаров — параметры стола и эффекты</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Чар (ID)</th><th>Предметы</th><th>Ур.</th><th>Мин. ур. стола</th><th>Шанс чара</th><th>Эффект</th></tr>
+          <tr><td>Вампиризм (<code>vampirism</code>)</td><td>Меч</td><td>I–III</td><td>8</td><td>32%</td><td>15%/25%/35% шанс восстановить 1–2 сердца при ударе.</td></tr>
+          <tr><td>Ядовитый клинок (<code>poison_blade</code>)</td><td>Меч</td><td>I–II</td><td>8</td><td>30%</td><td>20% шанс наложить Отравление I на 3–4 сек.</td></tr>
+          <tr><td>Громовержец (<code>thunderer</code>)</td><td>Меч</td><td>I–II</td><td>15</td><td>20%</td><td>Крит: 10%/15% молния, +2–3 чистого урона (без поджога лута).</td></tr>
+          <tr><td>Обезглавливание (<code>beheading</code>)</td><td>Меч/Топор</td><td>I–III</td><td>12</td><td>25%</td><td>10%/20%/30% шанс головы моба/игрока при убийстве.</td></tr>
+          <tr><td>Палач (<code>executioner</code>)</td><td>Меч</td><td>I–II</td><td>10</td><td>28%</td><td>+15%/+25% урона по целям с HP &lt; 30%.</td></tr>
+          <tr><td>Пружины (<code>springs</code>)</td><td>Ботинки</td><td>I–III</td><td>8</td><td>28%</td><td>Прыгучесть I–II; урон от падения −50% / III — полный иммунитет.</td></tr>
+          <tr><td>Лавоход (<code>lava_walker</code>)</td><td>Ботинки</td><td>I</td><td>18</td><td>15%</td><td>Превращает лаву под ногами в магму на ~5 сек (возвращается в лаву).</td></tr>
+          <tr><td>Закалка (<code>anti_crit</code>)</td><td>Нагрудник</td><td>I–II</td><td>12</td><td>24%</td><td>15%/25% шанс заблокировать крит (превратить в обычный удар).</td></tr>
+          <tr><td>Токсичный щит (<code>toxic_shield</code>)</td><td>Поножи</td><td>I–II</td><td>12</td><td>22%</td><td>При ударе вблизи 15% шанс наложить Иссушение I на 3 сек атакующему.</td></tr>
+          <tr><td>Ненасытность (<code>insatiable</code>)</td><td>Шлем</td><td>I</td><td>10</td><td>20%</td><td>Медленно восстанавливает сытость/насыщение.</td></tr>
+          <tr><td>Магнетизм (<code>magnetism</code>)</td><td>Кирка/Лопата/Топор/Мотыга</td><td>I</td><td>15</td><td>18%</td><td>Добытые блоки/дроп сразу попадают в инвентарь.</td></tr>
+          <tr><td>Опытный шахтёр (<code>experienced_miner</code>)</td><td>Кирка</td><td>I–III</td><td>10</td><td>25%</td><td>Опыт из руд ×1.5 / ×2 / ×2.5.</td></tr>
+          <tr><td>Взрывная стрела (<code>explosive_arrow</code>)</td><td>Лук/Арбалет</td><td>I–II</td><td>15</td><td>18%</td><td>Малый взрыв при попадании: без разрушения блоков, AoE урон и отбрасывание.</td></tr>
+          <tr><td>Снайпер (<code>sniper</code>)</td><td>Лук/Арбалет</td><td>I–II</td><td>12</td><td>22%</td><td>До +20%/+40% урона на дистанции 30+ блоков.</td></tr>
+          <tr><td>Крюк (<code>hook</code>)</td><td>Лук/Арбалет</td><td>I</td><td>14</td><td>20%</td><td>Притягивает цель к стрелку при попадании.</td></tr>
+          <tr><td>Бульдозер (<code>bulldozer</code>)</td><td>Кирка</td><td>I</td><td>20</td><td>12%</td><td>3x3x1 по взгляду; не ломает бедрок/обсидиан/плачущий обсидиан/спавнеры/сундуки; учитывает прочность/Unbreaking/Silk/Fortune.</td></tr>
+          <tr><td>Плавка (<code>smelting</code>)</td><td>Кирка</td><td>I</td><td>18</td><td>14%</td><td>Железная/золотая/незер-золотая руда → слитки, с Fortune и XP.</td></tr>
+          <tr><td>Последний Шанс (<code>last_chance</code>)</td><td>Нагрудник</td><td>I</td><td>25</td><td>8%</td><td>Смертельный урон отменяется: HP=2.0, отталкивание врагов в 5 блоках, чар сгорает.</td></tr>
+        </table></div>
+        <p class="small muted">«Шанс чара» — это дополнительный per-enchant фильтр после общего ролла стола. Реальная вероятность получить конкретный чар ниже, т.к. зависит от общего шанса, min-exp-level и конкуренции с другими подходящими чарами.</p>
+      </div>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>5) Админ-команды</h3>
+          <pre>/cenchant give &lt;игрок&gt; &lt;чар&gt; &lt;уровень&gt;
+/cenchant list
+/cenchant reload
+/enchanter</pre>
+          <ul>
+            <li><code>sigmaenchants.admin</code> — give/list/reload (op).</li>
+            <li><code>sigmaenchants.enchanter</code> — открыть GUI чародея (default: true).</li>
+            <li>Книги с кастом-чарами можно выдавать через <code>/cenchant give</code> и продавать в кейсах/у Контрабандиста.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>6) Ограничения и советы</h3>
+          <ul>
+            <li>UI стола 1.16.5 не показывает кастомные чары в 3 предложениях — это нормально для Spigot 1.16.5 без NMS-клиентских хаков.</li>
+            <li>Один и тот же кастомный чар не ставится повторно на предмет.</li>
+            <li>Для редких чаров подними <code>table-chance</code> или снизь <code>min-exp-level</code> в конфиге, если хочешь чаще выпадение.</li>
+            <li>Можно отключить любой чар: <code>enabled: false</code>.</li>
+            <li>Добавление новых чаров — через обновление SigmaEnchants (код эффекта + запись в registry/config).</li>
+          </ul>
+        </div>
       </div>
     </section>
 
